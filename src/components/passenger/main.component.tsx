@@ -3,12 +3,11 @@ import styles from './css/styles.module.scss';
 import { FunctionComponent } from 'react';
 import { Route, useRouteMatch, Switch, Redirect, Link } from 'react-router-dom';
 
-import { AddUser } from './add-user.component';
-import { UsersList } from './user-list.component';
 import { useStoreDispatch } from '../../redux/store';
 import { updateUser } from '../../redux/slices/user.slice';
+import { SearchTrainsBetweenStations } from './search-trains-between-stations.component';
 
-export const AdminMain: FunctionComponent = () => {
+export const PassengerMain: FunctionComponent = () => {
   const dispatch = useStoreDispatch();
   const logout = (e: any) => {
     e.preventDefault();
@@ -32,26 +31,28 @@ export const AdminMain: FunctionComponent = () => {
             <button type="submit">Logout</button>
           </form>
 
-          <h1 style={{ marginBottom: '20px' }}>TickTrip Admin</h1>
+          <h1 style={{ marginBottom: '20px' }}>TickTrip</h1>
 
-          <h2
-            style={{
-              marginBottom: '20px',
-            }}
-          >
-            <Link to={path + '/add-user'} style={{ marginRight: '20px' }}>
-              Add new user
+          <h2>
+            <Link
+              to={path + '/search-trains-berween-stations'}
+              style={{ marginRight: '20px' }}
+            >
+              Search trains between stations
             </Link>
-            <Link to={path + '/user-list'}>List of users</Link>
           </h2>
 
           <Switch>
-            <Route exact path={path + '/add-user'} component={AddUser} />
-            <Route exact path={path + '/user-list'} component={UsersList} />
+            <Route
+              path={path + '/search-trains-berween-stations'}
+              component={SearchTrainsBetweenStations}
+            />
 
             <Route
               path=""
-              render={() => <Redirect to={path + '/user-list'} />}
+              render={() => (
+                <Redirect to={path + '/search-trains-berween-stations'} />
+              )}
             />
           </Switch>
         </div>

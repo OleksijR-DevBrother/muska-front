@@ -1,7 +1,7 @@
 import styles from './css/styles.module.scss';
 
 import { FunctionComponent } from 'react';
-import { Route, useRouteMatch, Switch, Redirect } from 'react-router';
+import { Route, useRouteMatch, Switch, Redirect } from 'react-router-dom';
 
 import { Login } from './login.component';
 import { SignUp } from './signup.component';

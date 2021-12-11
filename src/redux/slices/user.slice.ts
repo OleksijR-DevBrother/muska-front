@@ -7,6 +7,7 @@ const slice = createSlice({
   initialState: {
     accessToken: '',
     refreshToken: '',
+    role: '',
   } as User,
   reducers: {
     updateUser: (state, action: PayloadAction<Partial<User>>) => {
@@ -15,6 +16,9 @@ const slice = createSlice({
       }
       if (action.payload.refreshToken !== undefined) {
         state.refreshToken = action.payload.refreshToken;
+      }
+      if (action.payload.role !== undefined) {
+        state.role = action.payload.role;
       }
     },
   },

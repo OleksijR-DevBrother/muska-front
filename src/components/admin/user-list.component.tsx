@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { config } from '../../config';
@@ -20,9 +20,9 @@ export const UsersList: FunctionComponent = () => {
     setUsers(res.data);
   };
 
-  if (!users.length) {
+  useEffect(() => {
     loadUsersList();
-  }
+  }, []);
 
   const deleteUser = async (userId: string) => {
     const url = new URL(`/user/${userId}`, config.authUrl).toString();
@@ -71,7 +71,7 @@ export const UsersList: FunctionComponent = () => {
 
   return (
     <div>
-      <h2 style={{ marginBottom: '20px' }}>List of users</h2>
+      {/* <h2 style={{ marginBottom: '20px' }}>List of users</h2> */}
       {users.map((user) => (
         <div style={{ margin: '10px' }} key={user.id}>
           <h3 style={{ display: 'inline' }}>

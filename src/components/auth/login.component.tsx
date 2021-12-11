@@ -33,6 +33,7 @@ export const Login: FunctionComponent = () => {
       updateUser({
         accessToken: res.data.accessToken,
         refreshToken: res.data.refreshToken,
+        role: res.data.role,
       }),
     );
   };
