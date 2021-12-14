@@ -116,7 +116,7 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
       setSittings(data);
 
       if (data.length && !selectedSittingId) {
-        setSelectedSittingId(data[0].id);
+        setSelectedSittingId(data[0].sittingId);
       }
     }
   };
@@ -144,7 +144,7 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
   };
 
   const buyTicket = async () => {
-    const { data } = await axios.post(
+    await axios.post(
       new URL('/tickets/buy', config.trainsUrl).toString(),
       {
         sittingId: selectedSittingId,
