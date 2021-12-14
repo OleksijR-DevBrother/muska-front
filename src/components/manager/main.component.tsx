@@ -11,6 +11,7 @@ import { CreateTrain } from './create-train.component';
 import { AddStationToRoute } from './add-station-to-route.component';
 import { CreateTrainDeparture } from './create-train-departure.component';
 import { CreateTrainAtStation } from './create-train-at-station.component';
+import { CreateCarriage } from './create-carriage.component';
 
 export const ManagerMain: FunctionComponent = () => {
   const dispatch = useStoreDispatch();
@@ -70,6 +71,12 @@ export const ManagerMain: FunctionComponent = () => {
             >
               Create train at station
             </Link>
+            <Link
+              to={path + '/create-carriage'}
+              style={{ marginRight: '20px' }}
+            >
+              Create carriage
+            </Link>
           </h2>
 
           <Switch>
@@ -102,6 +109,11 @@ export const ManagerMain: FunctionComponent = () => {
               exact
               path={path + '/create-train-at-station'}
               component={CreateTrainAtStation}
+            />
+            <Route
+              exact
+              path={path + '/create-carriage'}
+              component={CreateCarriage}
             />
 
             <Route

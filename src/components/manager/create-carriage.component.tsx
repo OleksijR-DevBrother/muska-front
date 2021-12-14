@@ -6,39 +6,28 @@ import axios from 'axios';
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
 
-export const CreateTrainDeparture: FunctionComponent = () => {
+export const CreateCarriage: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
 
-  const days = {
-    Monday: 1,
-    Tuesday: 2,
-    Wednesday: 3,
-    Thursday: 4,
-    Friday: 5,
-    Saturday: 6,
-    Sunday: 7,
-  };
-
   const [trainId, setTrainId] = useState('');
-  const [direction, setDirection] = useState('fromStart');
-  const [day, setDay] = useState('Monday');
-  const [hour, setHour] = useState(0);
-  const [minute, setMinute] = useState(0);
+  const [typeName, setTypeName] = useState('');
+  const [indexInTrain, setIndexInTrain] = useState(0);
+  const [numberOfSittings, setNumberOfSittings] = useState(0);
+  const [ticketPrice, setTicketPrice] = useState(0);
   const [error, setError] = useState('');
 
   const createTrainFunction = async (e: any) => {
     e.preventDefault();
 
-    const url = new URL(
-      '/trains/departure-date/create',
-      config.trainsUrl,
-    ).toString();
+    const url = new URL('/carriages/create', config.trainsUrl).toString();
     const res = await axios.post(
       url,
       {
-        time: ((days as any)[day] * 24 * 60 + hour * 60 + minute) * 60 * 1000,
+        indexInTrain,
+        typeName,
+        sittings: numberOfSittings,
+        priceOfSitting: ticketPrice,
         trainId,
-        direction,
       },
       {
         headers: {
@@ -56,6 +45,7 @@ export const CreateTrainDeparture: FunctionComponent = () => {
   };
 
   const [trains, setTrains] = useState([] as any[]);
+  const [types, setTypes] = useState([] as any[]);
 
   const loadData = async () => {
     const { data: trains } = await axios.get(
@@ -70,6 +60,20 @@ export const CreateTrainDeparture: FunctionComponent = () => {
 
     if (trains.length) {
       setTrainId(trains[0].id);
+    }
+
+    const { data: types } = await axios.get(
+      new URL('/carriages/types/get/list', config.trainsUrl).toString(),
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      },
+    );
+    setTypes(types);
+
+    if (types.length) {
+      setTypeName(types[0].name);
     }
   };
 
@@ -92,51 +96,47 @@ export const CreateTrainDeparture: FunctionComponent = () => {
           </option>
         ))}
       </select>
-      Day
+      Type
       <select
         style={{ color: 'black' }}
-        onChange={(e) => setDay(e.target.value)}
-        value={day}
+        onChange={(e) => setTypeName(e.target.value)}
+        value={typeName}
       >
-        {Object.keys(days).map((dayname) => (
-          <option key={dayname} value={dayname}>
-            {dayname}
+        {types.map((station) => (
+          <option key={station.id} value={station.id}>
+            {station.name}
           </option>
         ))}
       </select>
-      Direction
-      <select
-        style={{ color: 'black' }}
-        onChange={(e) => setDirection(e.target.value)}
-        value={direction}
-      >
-        <option key="fromStart" value="fromStart">
-          From start
-        </option>
-        <option key="fromEnd" value="fromEnd">
-          From end
-        </option>
-      </select>
       <br />
-      <br />
-      Hour
+      Index in train
       <input
         type="number"
-        placeholder="Hour"
-        value={hour}
-        onChange={(e) => setHour(Number(e.target.value))}
+        placeholder="Index in train"
+        value={indexInTrain}
+        onChange={(e) => setIndexInTrain(Number(e.target.value))}
         required
       />
       <br />
-      Minute
+      Number of sittings
       <input
         type="number"
-        placeholder="Minute"
-        value={minute}
-        onChange={(e) => setMinute(Number(e.target.value))}
+        placeholder="Number of sittings"
+        value={numberOfSittings}
+        onChange={(e) => setNumberOfSittings(Number(e.target.value))}
         required
       />
-      <button type="submit">Create train departure time</button>
+      <br />
+      Ticket price
+      <input
+        type="number"
+        placeholder="Ticket price"
+        value={ticketPrice}
+        onChange={(e) => setTicketPrice(Number(e.target.value))}
+        required
+      />
+      <br />
+      <button type="submit">Create carriage</button>
       {errorAlert}
     </form>
   );
