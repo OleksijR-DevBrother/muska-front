@@ -1,6 +1,6 @@
 import styles from './css/styles.module.scss';
 
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { Route, useRouteMatch, Switch, Redirect, Link } from 'react-router-dom';
 
 import { useStoreDispatch } from '../../redux/store';
@@ -12,6 +12,44 @@ import { AddStationToRoute } from './add-station-to-route.component';
 import { CreateTrainDeparture } from './create-train-departure.component';
 import { CreateTrainAtStation } from './create-train-at-station.component';
 import { CreateCarriage } from './create-carriage.component';
+
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
 
 export const ManagerMain: FunctionComponent = () => {
   const dispatch = useStoreDispatch();
@@ -27,13 +65,99 @@ export const ManagerMain: FunctionComponent = () => {
     );
   };
 
-  const { path } = useRouteMatch();
+  // const { path } = useRouteMatch();
+
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
 
   return (
     <div className={styles['auth-block']}>
       <div className={styles.wrapper}>
         <div className={styles.container}>
+          <h1 style={{ marginBottom: '20px' }}>TickTrip</h1>
+
           <form onSubmit={logout}>
+            <button type="submit">Logout</button>
+          </form>
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              height: 224,
+            }}
+          >
+            <Tabs
+              orientation="vertical"
+              variant="scrollable"
+              value={value}
+              onChange={handleChange}
+              aria-label="Vertical tabs example"
+              sx={{ borderRight: 1, borderColor: 'divider' }}
+            >
+              <Tab
+                style={{ color: 'white', fontSize: 15 }}
+                label="Create new route"
+                {...a11yProps(0)}
+              />
+              <Tab
+                style={{ color: 'white', fontSize: 15 }}
+                label="Create new station"
+                {...a11yProps(1)}
+              />
+              <Tab
+                style={{ color: 'white', fontSize: 15 }}
+                label="Add station to route"
+                {...a11yProps(2)}
+              />
+              <Tab
+                style={{ color: 'white', fontSize: 15 }}
+                label="Create new train"
+                {...a11yProps(3)}
+              />
+              <Tab
+                style={{ color: 'white', fontSize: 15 }}
+                label="Create train departure"
+                {...a11yProps(4)}
+              />
+              <Tab
+                style={{ color: 'white', fontSize: 15 }}
+                label="Create train at station"
+                {...a11yProps(5)}
+              />
+              <Tab
+                style={{ color: 'white', fontSize: 15 }}
+                label="Create carriage"
+                {...a11yProps(6)}
+              />
+            </Tabs>
+            <TabPanel value={value} index={0}>
+              <CreateRoute />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <CreateStation />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <AddStationToRoute />
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+              <CreateTrain />
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+              <CreateTrainDeparture />
+            </TabPanel>
+            <TabPanel value={value} index={5}>
+              <CreateTrainAtStation />
+            </TabPanel>
+            <TabPanel value={value} index={6}>
+              <CreateCarriage />
+            </TabPanel>
+          </Box>
+
+          {/* <form onSubmit={logout}>
             <button type="submit">Logout</button>
           </form>
 
@@ -120,7 +244,7 @@ export const ManagerMain: FunctionComponent = () => {
               path=""
               render={() => <Redirect to={path + '/create-route'} />}
             />
-          </Switch>
+          </Switch> */}
         </div>
       </div>
     </div>

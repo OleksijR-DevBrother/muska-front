@@ -83,7 +83,11 @@ export const CreateCarriage: FunctionComponent = () => {
 
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
   return (
-    <form className="form" onSubmit={createTrainFunction}>
+    <form
+      className="form"
+      onSubmit={createTrainFunction}
+      style={{ fontSize: 15 }}
+    >
       Train
       <select
         style={{ color: 'black' }}
@@ -96,6 +100,8 @@ export const CreateCarriage: FunctionComponent = () => {
           </option>
         ))}
       </select>
+      <br />
+      <br />
       Type
       <select
         style={{ color: 'black' }}
@@ -108,6 +114,7 @@ export const CreateCarriage: FunctionComponent = () => {
           </option>
         ))}
       </select>
+      <br />
       <br />
       Index in train
       <input

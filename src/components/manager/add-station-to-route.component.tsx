@@ -78,7 +78,11 @@ export const AddStationToRoute: FunctionComponent = () => {
 
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
   return (
-    <form className="form" onSubmit={createTrainFunction}>
+    <form
+      className="form"
+      onSubmit={createTrainFunction}
+      style={{ fontSize: 15 }}
+    >
       Station
       <select
         style={{ color: 'black' }}
@@ -86,11 +90,17 @@ export const AddStationToRoute: FunctionComponent = () => {
         value={stationId}
       >
         {stations.map((station) => (
-          <option key={station.id} value={station.id}>
+          <option
+            key={station.id}
+            value={station.id}
+            style={{ color: 'black' }}
+          >
             {station.name}
           </option>
         ))}
       </select>
+      <br />
+      <br />
       Route
       <select
         style={{ color: 'black' }}
@@ -103,6 +113,8 @@ export const AddStationToRoute: FunctionComponent = () => {
           </option>
         ))}
       </select>
+      <br />
+      <br />
       <input
         type="number"
         placeholder="Index on the route"
@@ -110,7 +122,7 @@ export const AddStationToRoute: FunctionComponent = () => {
         onChange={(e) => setStationIndex(Number(e.target.value))}
         required
       />
-      <button type="submit">Create train</button>
+      <button type="submit">Add station to route</button>
       {errorAlert}
     </form>
   );

@@ -160,7 +160,7 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
 
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
   return (
-    <form className="form" onSubmit={SearchTrains}>
+    <form className="form" onSubmit={SearchTrains} style={{ fontSize: 15 }}>
       From
       <select
         style={{ color: 'black' }}
@@ -173,6 +173,8 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
           </option>
         ))}
       </select>
+      <br />
+      <br />
       To
       <select
         style={{ color: 'black' }}
@@ -185,6 +187,8 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
           </option>
         ))}
       </select>
+      <br />
+      <br />
       Day
       <input
         type="date"

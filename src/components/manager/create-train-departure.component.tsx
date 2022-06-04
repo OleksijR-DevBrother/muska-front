@@ -79,7 +79,11 @@ export const CreateTrainDeparture: FunctionComponent = () => {
 
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
   return (
-    <form className="form" onSubmit={createTrainFunction}>
+    <form
+      className="form"
+      onSubmit={createTrainFunction}
+      style={{ fontSize: 15 }}
+    >
       Train
       <select
         style={{ color: 'black' }}
@@ -92,6 +96,8 @@ export const CreateTrainDeparture: FunctionComponent = () => {
           </option>
         ))}
       </select>
+      <br />
+      <br />
       Day
       <select
         style={{ color: 'black' }}
@@ -104,6 +110,8 @@ export const CreateTrainDeparture: FunctionComponent = () => {
           </option>
         ))}
       </select>
+      <br />
+      <br />
       Direction
       <select
         style={{ color: 'black' }}

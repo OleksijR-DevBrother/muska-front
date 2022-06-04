@@ -28,6 +28,8 @@ export const SignUp: FunctionComponent = () => {
       address,
       phoneNumber,
       password,
+      isBlocked: false,
+      role: 'passenger',
     });
 
     if (res.data.error) {
