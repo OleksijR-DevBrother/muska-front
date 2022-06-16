@@ -76,17 +76,6 @@ export const SearchWaysBetweenStations: FunctionComponent = () => {
     loadData();
   }, []);
 
-  const msToTime = (ms: number | string) => {
-    let res = `${Math.floor(Number(ms) / 3600000)}:`;
-    if (Number(ms) % 3600000 < 600000) {
-      res += '0';
-    }
-    res += Math.floor((Number(ms) % 3600000) / 60000);
-    return res;
-  };
-
-  console.log(fromStationId);
-
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
   return (
     <form className="form" onSubmit={SearchTrains} style={{ fontSize: 15 }}>

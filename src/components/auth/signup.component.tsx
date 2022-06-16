@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { config } from '../../config';
+import { localization } from '../../localization';
+import { useStoreSelector } from '../../redux/store';
 
 export const SignUp: FunctionComponent = () => {
+  const user = useStoreSelector((state) => state.user);
+
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
@@ -80,11 +84,11 @@ export const SignUp: FunctionComponent = () => {
         required
       />
 
-      <button type="submit">Sign Up</button>
+      <button type="submit">{localization.signUp[user.language]}</button>
       <br />
       <Link to={'/auth/login'}>
         <button type="button" id="login-button">
-          Login
+          {localization.login[user.language]}
         </button>
       </Link>
 

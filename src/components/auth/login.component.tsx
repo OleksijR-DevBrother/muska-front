@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { config } from '../../config';
-import { useStoreDispatch } from '../../redux/store';
+import { useStoreDispatch, useStoreSelector } from '../../redux/store';
 import { updateUser } from '../../redux/slices/user.slice';
+import { localization } from '../../localization';
 
 export const Login: FunctionComponent = () => {
+  const user = useStoreSelector((state) => state.user);
+
   const [phoneNumber, setPhoneNumber] = useState('+380000000000');
   const [password, setPassword] = useState('adminadmin');
   const [error, setError] = useState('');
@@ -56,10 +59,10 @@ export const Login: FunctionComponent = () => {
         required
       />
 
-      <button type="submit">Login</button>
+      <button type="submit">{localization.login[user.language]}</button>
       <br />
       <Link to={'/auth/signup'}>
-        <button type="button">Sign Up</button>
+        <button type="button">{localization.signUp[user.language]}</button>
       </Link>
 
       {errorAlert}

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { User } from '../types/user.interface';
+import { Language } from '../../localization';
 
 const slice = createSlice({
   name: 'user slice',
@@ -8,6 +9,7 @@ const slice = createSlice({
     accessToken: '',
     refreshToken: '',
     role: '',
+    language: Language.ENGLISH,
   } as User,
   reducers: {
     updateUser: (state, action: PayloadAction<Partial<User>>) => {
@@ -19,6 +21,9 @@ const slice = createSlice({
       }
       if (action.payload.role !== undefined) {
         state.role = action.payload.role;
+      }
+      if (action.payload.language !== undefined) {
+        state.language = action.payload.language;
       }
     },
   },
