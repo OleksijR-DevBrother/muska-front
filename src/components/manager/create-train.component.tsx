@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 export const CreateTrain: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
@@ -84,7 +85,7 @@ export const CreateTrain: FunctionComponent = () => {
       onSubmit={createTrainFunction}
       style={{ fontSize: 15 }}
     >
-      Type
+      {localization.type[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setType(e.target.value)}
@@ -98,7 +99,7 @@ export const CreateTrain: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      Route
+      {localization.route[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setRouteId(e.target.value)}
@@ -114,12 +115,12 @@ export const CreateTrain: FunctionComponent = () => {
       <br />
       <input
         type="text"
-        placeholder="Name"
+        placeholder={localization.naming[user.language]}
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
       />
-      <button type="submit">Create train</button>
+      <button type="submit">{localization.createTrain[user.language]}</button>
       {errorAlert}
     </form>
   );

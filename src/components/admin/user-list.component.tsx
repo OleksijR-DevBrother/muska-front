@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 export const UsersList: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
@@ -72,32 +73,32 @@ export const UsersList: FunctionComponent = () => {
   return (
     <div>
       {/* <h2 style={{ marginBottom: '20px' }}>List of users</h2> */}
-      {users.map((user) => (
-        <div style={{ margin: '10px' }} key={user.id}>
+      {users.map((user1) => (
+        <div style={{ margin: '10px' }} key={user1.id}>
           <h3 style={{ display: 'inline' }}>
-            {user.name} {user.surname}
+            {user1.name} {user1.surname}
           </h3>
 
           <button
             style={{ backgroundColor: 'red' }}
-            onClick={() => deleteUser(user.id)}
+            onClick={() => deleteUser(user1.id)}
           >
-            Delete
+            {localization.delete[user.language]}
           </button>
 
-          {user.isBlocked ? (
+          {user1.isBlocked ? (
             <button
               style={{ backgroundColor: 'purple' }}
-              onClick={() => unblockUser(user.id)}
+              onClick={() => unblockUser(user1.id)}
             >
-              Unblock
+              {localization.unblock[user.language]}
             </button>
           ) : (
             <button
               style={{ backgroundColor: 'purple' }}
-              onClick={() => blockUser(user.id)}
+              onClick={() => blockUser(user1.id)}
             >
-              Block
+              {localization.block[user.language]}
             </button>
           )}
         </div>

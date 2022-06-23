@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 export const CreateRoute: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
@@ -40,13 +41,13 @@ export const CreateRoute: FunctionComponent = () => {
     <form className="form" onSubmit={createRouteFunction}>
       <input
         type="text"
-        placeholder="Name"
+        placeholder={localization.naming[user.language]}
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
       />
 
-      <button type="submit">Create route</button>
+      <button type="submit">{localization.createRoute[user.language]}</button>
 
       {errorAlert}
     </form>

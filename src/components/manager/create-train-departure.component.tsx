@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 export const CreateTrainDeparture: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
@@ -84,7 +85,7 @@ export const CreateTrainDeparture: FunctionComponent = () => {
       onSubmit={createTrainFunction}
       style={{ fontSize: 15 }}
     >
-      Train
+      {localization.train[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setTrainId(e.target.value)}
@@ -98,7 +99,7 @@ export const CreateTrainDeparture: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      Day
+      {localization.day[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setDay(e.target.value)}
@@ -112,22 +113,22 @@ export const CreateTrainDeparture: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      Direction
+      {localization.direction[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setDirection(e.target.value)}
         value={direction}
       >
         <option key="fromStart" value="fromStart">
-          From start
+          {localization.fromStart[user.language]}
         </option>
         <option key="fromEnd" value="fromEnd">
-          From end
+          {localization.fromEnd[user.language]}
         </option>
       </select>
       <br />
       <br />
-      Hour
+      {localization.hour[user.language]}
       <input
         type="number"
         placeholder="Hour"
@@ -136,7 +137,7 @@ export const CreateTrainDeparture: FunctionComponent = () => {
         required
       />
       <br />
-      Minute
+      {localization.minute[user.language]}
       <input
         type="number"
         placeholder="Minute"
@@ -144,7 +145,9 @@ export const CreateTrainDeparture: FunctionComponent = () => {
         onChange={(e) => setMinute(Number(e.target.value))}
         required
       />
-      <button type="submit">Create train departure time</button>
+      <button type="submit">
+        {localization.createTrainDepartureTime[user.language]}
+      </button>
       {errorAlert}
     </form>
   );

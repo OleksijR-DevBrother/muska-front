@@ -3,7 +3,7 @@ import styles from './css/styles.module.scss';
 import { FunctionComponent, useState } from 'react';
 import { Route, useRouteMatch, Switch, Redirect, Link } from 'react-router-dom';
 
-import { useStoreDispatch } from '../../redux/store';
+import { useStoreDispatch, useStoreSelector } from '../../redux/store';
 import { updateUser } from '../../redux/slices/user.slice';
 import { CreateRoute } from './create-route.component';
 import { CreateStation } from './create-station.component';
@@ -17,6 +17,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { localization } from '../../localization';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,6 +53,7 @@ function a11yProps(index: number) {
 }
 
 export const ManagerMain: FunctionComponent = () => {
+  const user = useStoreSelector((store) => store.user);
   const dispatch = useStoreDispatch();
   const logout = (e: any) => {
     e.preventDefault();
@@ -80,7 +82,7 @@ export const ManagerMain: FunctionComponent = () => {
           <h1 style={{ marginBottom: '20px' }}>TickTrip</h1>
 
           <form onSubmit={logout}>
-            <button type="submit">Logout</button>
+            <button type="submit">{localization.logout[user.language]}</button>
           </form>
 
           <Box

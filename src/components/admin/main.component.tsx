@@ -5,13 +5,14 @@ import { Route, useRouteMatch, Switch, Redirect, Link } from 'react-router-dom';
 
 import { AddUser } from './add-user.component';
 import { UsersList } from './user-list.component';
-import { useStoreDispatch } from '../../redux/store';
+import { useStoreDispatch, useStoreSelector } from '../../redux/store';
 import { updateUser } from '../../redux/slices/user.slice';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { localization } from '../../localization';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,6 +48,7 @@ function a11yProps(index: number) {
 }
 
 export const AdminMain: FunctionComponent = () => {
+  const user = useStoreSelector((store) => store.user);
   const dispatch = useStoreDispatch();
   const logout = (e: any) => {
     e.preventDefault();
@@ -75,7 +77,7 @@ export const AdminMain: FunctionComponent = () => {
           <h1 style={{ marginBottom: '20px' }}>TickTrip</h1>
 
           <form onSubmit={logout}>
-            <button type="submit">Logout</button>
+            <button type="submit">{localization.logout[user.language]}</button>
           </form>
 
           <Box
@@ -95,12 +97,12 @@ export const AdminMain: FunctionComponent = () => {
             >
               <Tab
                 style={{ color: 'white', fontSize: 15 }}
-                label="Add new user"
+                label={localization.addUser[user.language]}
                 {...a11yProps(0)}
               />
               <Tab
                 style={{ color: 'white', fontSize: 15 }}
-                label="List of users"
+                label={localization.listOfUsers[user.language]}
                 {...a11yProps(1)}
               />
             </Tabs>

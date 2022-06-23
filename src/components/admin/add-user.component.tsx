@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 export const AddUser: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
@@ -54,50 +55,50 @@ export const AddUser: FunctionComponent = () => {
     <form onSubmit={addUserFunction}>
       <input
         type="text"
-        placeholder="Name"
+        placeholder={localization.name[user.language]}
         onChange={(e) => setName(e.target.value)}
         required
       />
       <input
         type="text"
-        placeholder="Surname"
+        placeholder={localization.surname[user.language]}
         onChange={(e) => setSurname(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Patronymic"
+        placeholder={localization.patronimic[user.language]}
         onChange={(e) => setPatronymic(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Date of Birth"
+        placeholder={localization.DOB[user.language]}
         onChange={(e) => setDOB(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Address"
+        placeholder={localization.address[user.language]}
         onChange={(e) => setAddress(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Phone"
+        placeholder={localization.phone[user.language]}
         onChange={(e) => setPhoneNumber(e.target.value)}
         required
       />
       <input
         type="password"
-        placeholder="Password"
+        placeholder={localization.password[user.language]}
         onChange={(e) => setPassword(e.target.value)}
         required
       />
       <input
         type="text"
-        placeholder="Role"
+        placeholder={localization.role[user.language]}
         onChange={(e) => setRole(e.target.value)}
         required
       />
 
-      <button type="submit">Add User</button>
+      <button type="submit">{localization.addUser[user.language]}</button>
 
       {errorAlert}
     </form>

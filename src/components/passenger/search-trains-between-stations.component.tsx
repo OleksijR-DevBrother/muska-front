@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 interface SearchResult {
   id: string;
@@ -161,7 +162,7 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
   return (
     <form className="form" onSubmit={SearchTrains} style={{ fontSize: 15 }}>
-      From
+      {localization.from[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setFromStationId(e.target.value)}
@@ -175,7 +176,7 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      To
+      {localization.to[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setToStationId(e.target.value)}
@@ -189,21 +190,31 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      Day
+      {localization.day[user.language]}
       <input
         type="date"
         value={departureDate}
         onChange={(e) => setDepartureDate(e.target.value)}
       />
-      <button type="submit">Search</button>
+      <button type="submit">{localization.search[user.language]}</button>
       {errorAlert}
       {searchResults.map((result) => (
         <div key={result.id}>
           <hr />
-          <h3>Route: {result.routeName}</h3>
-          <h3>Train number: {result.name}</h3>
-          <h3>Departure time: {msToTime(result.departureTime)}</h3>
-          <h3>Travel time: {msToTime(result.travelTime)}</h3>
+          <h3>
+            {localization.route[user.language]}: {result.routeName}
+          </h3>
+          <h3>
+            {localization.trainNumber[user.language]}: {result.name}
+          </h3>
+          <h3>
+            {localization.departureTime[user.language]}:
+            {msToTime(result.departureTime)}
+          </h3>
+          <h3>
+            {localization.travelTime[user.language]}:
+            {msToTime(result.travelTime)}
+          </h3>
 
           <button
             onClick={() =>
@@ -213,13 +224,13 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
               )
             }
           >
-            See free sittings
+            {localization.freeSittings[user.language]}
           </button>
 
           {selectedTrainId === result.id ? (
             <>
               <br />
-              Carriage
+              {localization.carriage[user.language]}
               <select
                 style={{ color: 'black' }}
                 value={selectedCarriageId}
@@ -234,7 +245,7 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
               {selectedCarriageId ? (
                 <>
                   <br />
-                  Sitting
+                  {localization.sitting[user.language]}
                   <select
                     style={{ color: 'black' }}
                     value={selectedSittingId}
@@ -248,7 +259,9 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
                   </select>
                 </>
               ) : null}
-              <button onClick={buyTicket}>Buy ticket</button>
+              <button onClick={buyTicket}>
+                {localization.buyTicket[user.language]}
+              </button>
             </>
           ) : null}
         </div>

@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 export const AddStationToRoute: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
@@ -83,7 +84,7 @@ export const AddStationToRoute: FunctionComponent = () => {
       onSubmit={createTrainFunction}
       style={{ fontSize: 15 }}
     >
-      Station
+      {localization.station[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setStationId(e.target.value)}
@@ -101,7 +102,7 @@ export const AddStationToRoute: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      Route
+      {localization.route[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setRouteId(e.target.value)}
@@ -122,7 +123,9 @@ export const AddStationToRoute: FunctionComponent = () => {
         onChange={(e) => setStationIndex(Number(e.target.value))}
         required
       />
-      <button type="submit">Add station to route</button>
+      <button type="submit">
+        {localization.addStationToRoute[user.language]}
+      </button>
       {errorAlert}
     </form>
   );

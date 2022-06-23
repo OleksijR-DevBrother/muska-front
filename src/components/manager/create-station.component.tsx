@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 export const CreateStation: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
@@ -40,13 +41,13 @@ export const CreateStation: FunctionComponent = () => {
     <form className="form" onSubmit={createStationFunction}>
       <input
         type="text"
-        placeholder="Name"
+        placeholder={localization.naming[user.language]}
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
       />
 
-      <button type="submit">Create station</button>
+      <button type="submit">{localization.createStation[user.language]}</button>
 
       {errorAlert}
     </form>

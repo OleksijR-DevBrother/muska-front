@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 export const CreateTrainAtStation: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
@@ -94,7 +95,7 @@ export const CreateTrainAtStation: FunctionComponent = () => {
       onSubmit={createTrainFunction}
       style={{ fontSize: 15 }}
     >
-      Train
+      {localization.from[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setTrainId(e.target.value)}
@@ -108,7 +109,7 @@ export const CreateTrainAtStation: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      Station
+      {localization.station[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setStationId(e.target.value)}
@@ -122,9 +123,9 @@ export const CreateTrainAtStation: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      Way time in mintes
+      {localization.wayTimeInMinutes[user.language]}
       <br />
-      From first station
+      {localization.fromFirstStation[user.language]}
       <input
         type="number"
         placeholder="From first station"
@@ -133,7 +134,7 @@ export const CreateTrainAtStation: FunctionComponent = () => {
         required
       />
       <br />
-      From last station
+      {localization.fromLastStation[user.language]}
       <input
         type="number"
         placeholder="From last station"
@@ -142,7 +143,7 @@ export const CreateTrainAtStation: FunctionComponent = () => {
         required
       />
       <br />
-      Train stand
+      {localization.trainStand[user.language]}
       <br />
       To
       <input
@@ -161,7 +162,9 @@ export const CreateTrainAtStation: FunctionComponent = () => {
         onChange={(e) => setTrainStandFromLastStation(Number(e.target.value))}
         required
       />
-      <button type="submit">Create train at station</button>
+      <button type="submit">
+        {localization.createTrainAtStation[user.language]}
+      </button>
       {errorAlert}
     </form>
   );

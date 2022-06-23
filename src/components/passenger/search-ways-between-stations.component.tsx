@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 type SearchResult = {
   trainsNumbers: string[];
@@ -79,7 +80,7 @@ export const SearchWaysBetweenStations: FunctionComponent = () => {
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
   return (
     <form className="form" onSubmit={SearchTrains} style={{ fontSize: 15 }}>
-      From
+      {localization.from[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => {
@@ -96,7 +97,7 @@ export const SearchWaysBetweenStations: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      To
+      {localization.to[user.language]}
       <select
         style={{ color: 'black' }}
         onChange={(e) => setToStationId(e.target.value)}
