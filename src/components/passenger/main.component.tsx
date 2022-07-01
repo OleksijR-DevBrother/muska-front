@@ -1,18 +1,19 @@
 import styles from './css/styles.module.scss';
 
 import { FunctionComponent, useState } from 'react';
-import { Route, useRouteMatch, Switch, Redirect, Link } from 'react-router-dom';
 
+import { localization } from '../../localization';
 import { useStoreDispatch, useStoreSelector } from '../../redux/store';
 import { updateUser } from '../../redux/slices/user.slice';
 import { SearchTrainsBetweenStations } from './search-trains-between-stations.component';
 import { SearchWaysBetweenStations } from './search-ways-between-stations.component';
+import { UpdateProfile } from './update-profile.component';
+import { ReturnTicket } from './return-ticket.component';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { localization } from '../../localization';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -105,12 +106,28 @@ export const PassengerMain: FunctionComponent = () => {
                 label={localization.searchWaysBetweenStations[user.language]}
                 {...a11yProps(1)}
               />
+              <Tab
+                style={{ color: 'white', fontSize: 15 }}
+                label="Update profile"
+                {...a11yProps(2)}
+              />
+              <Tab
+                style={{ color: 'white', fontSize: 15 }}
+                label="Return ticket"
+                {...a11yProps(3)}
+              />
             </Tabs>
             <TabPanel value={value} index={0}>
               <SearchTrainsBetweenStations />
             </TabPanel>
             <TabPanel value={value} index={1}>
               <SearchWaysBetweenStations />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <UpdateProfile />
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+              <ReturnTicket />
             </TabPanel>
           </Box>
 

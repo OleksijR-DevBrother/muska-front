@@ -7,26 +7,57 @@ import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
 import { localization } from '../../localization';
 
-export const AddStationToRoute: FunctionComponent = () => {
+export const UpdateStationOnRoute: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
 
   const [stationId, setStationId] = useState('');
   const [routeId, setRouteId] = useState('');
+  const [routeStationId, setRouteStationId] = useState('');
   const [stationIndex, setStationIndex] = useState(1);
   const [error, setError] = useState('');
 
-  const createRouteStationFunction = async (e: any) => {
+  const loadRouteStation = async () => {
+    const url = new URL(
+      '/routes/route-stations/get',
+      config.trainsUrl,
+    ).toString();
+    const res = await axios.get(url, {
+      params: {
+        routeId,
+        stationId,
+      },
+      headers: {
+        Authorization: `Bearer ${user.accessToken}`,
+      },
+    });
+
+    if (res.status > 300) {
+      setError(res.data.message);
+      return;
+    }
+
+    setError('');
+
+    setRouteStationId(res.data.id);
+    setStationIndex(res.data.stationIndexOnTheRoute + 1);
+  };
+
+  useEffect(() => {
+    if (routeId && stationId) {
+      loadRouteStation();
+    }
+  }, [routeId, stationId]);
+
+  const updateRouteStationFunction = async (e: any) => {
     e.preventDefault();
 
     const url = new URL(
-      '/routes/stations-on-route/create',
+      `/routes/stations/update/${routeStationId}`,
       config.trainsUrl,
     ).toString();
-    const res = await axios.post(
+    const res = await axios.patch(
       url,
       {
-        stationId,
-        routeId,
         stationIndexOnTheRoute: stationIndex - 1,
       },
       {
@@ -85,7 +116,7 @@ export const AddStationToRoute: FunctionComponent = () => {
   return (
     <form
       className="form"
-      onSubmit={createRouteStationFunction}
+      onSubmit={updateRouteStationFunction}
       style={{ fontSize: 15 }}
     >
       {localization.station[user.language]}
@@ -128,9 +159,7 @@ export const AddStationToRoute: FunctionComponent = () => {
         onChange={(e) => setStationIndex(Number(e.target.value))}
         required
       />
-      <button type="submit">
-        {localization.addStationToRoute[user.language]}
-      </button>
+      <button type="submit">Update</button>
       {errorAlert}
     </form>
   );

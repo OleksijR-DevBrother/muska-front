@@ -109,9 +109,9 @@ export const CreateCarriage: FunctionComponent = () => {
         onChange={(e) => setTypeName(e.target.value)}
         value={typeName}
       >
-        {types.map((station) => (
-          <option key={station.id} value={station.id}>
-            {station.name}
+        {types.map((type) => (
+          <option key={type.name} value={type.name}>
+            {type.name}
           </option>
         ))}
       </select>

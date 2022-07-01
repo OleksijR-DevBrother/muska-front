@@ -1,23 +1,32 @@
 import styles from './css/styles.module.scss';
 
 import { FunctionComponent, useState } from 'react';
-import { Route, useRouteMatch, Switch, Redirect, Link } from 'react-router-dom';
 
+import { localization } from '../../localization';
 import { useStoreDispatch, useStoreSelector } from '../../redux/store';
 import { updateUser } from '../../redux/slices/user.slice';
 import { CreateRoute } from './create-route.component';
+import { UpdateRoute } from './update-route.component';
+import { DeleteRoute } from './delete-route.component';
 import { CreateStation } from './create-station.component';
+import { UpdateStation } from './update-station.component';
+import { DeleteStation } from './delete-station.component';
 import { CreateTrain } from './create-train.component';
+import { DeleteTrain } from './delete-train.component';
+import { UpdateTrain } from './update-train.component';
 import { AddStationToRoute } from './add-station-to-route.component';
+import { UpdateStationOnRoute } from './update-station-on-route.component';
+import { DeleteStationFromRoute } from './delete-station-on-route.component';
 import { CreateTrainDeparture } from './create-train-departure.component';
+import { DeleteTrainDeparture } from './delete-train-departure.component';
 import { CreateTrainAtStation } from './create-train-at-station.component';
 import { CreateCarriage } from './create-carriage.component';
+import { DeleteCarriage } from './delete-carriage.component';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { localization } from '../../localization';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -67,13 +76,82 @@ export const ManagerMain: FunctionComponent = () => {
     );
   };
 
-  // const { path } = useRouteMatch();
-
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const tabs = [
+    {
+      title: 'Create new route',
+      component: CreateRoute,
+    },
+    {
+      title: 'Update route',
+      component: UpdateRoute,
+    },
+    {
+      title: 'Delete route',
+      component: DeleteRoute,
+    },
+    {
+      title: 'Create new station',
+      component: CreateStation,
+    },
+    {
+      title: 'Update station',
+      component: UpdateStation,
+    },
+    {
+      title: 'Delete station',
+      component: DeleteStation,
+    },
+    {
+      title: 'Add station to route',
+      component: AddStationToRoute,
+    },
+    {
+      title: 'Update station on route',
+      component: UpdateStationOnRoute,
+    },
+    {
+      title: 'Delete station from route',
+      component: DeleteStationFromRoute,
+    },
+    {
+      title: 'Create new train',
+      component: CreateTrain,
+    },
+    {
+      title: 'Update train',
+      component: UpdateTrain,
+    },
+    {
+      title: 'Delete train',
+      component: DeleteTrain,
+    },
+    {
+      title: 'Create train departure',
+      component: CreateTrainDeparture,
+    },
+    {
+      title: 'Delete train departure',
+      component: DeleteTrainDeparture,
+    },
+    {
+      title: 'Create train at station',
+      component: CreateTrainAtStation,
+    },
+    {
+      title: 'Create new carriage',
+      component: CreateCarriage,
+    },
+    {
+      title: 'Delete carriage',
+      component: DeleteCarriage,
+    },
+  ];
 
   return (
     <div className={styles['auth-block']}>
@@ -100,153 +178,21 @@ export const ManagerMain: FunctionComponent = () => {
               aria-label="Vertical tabs example"
               sx={{ borderRight: 1, borderColor: 'divider' }}
             >
-              <Tab
-                style={{ color: 'white', fontSize: 15 }}
-                label="Create new route"
-                {...a11yProps(0)}
-              />
-              <Tab
-                style={{ color: 'white', fontSize: 15 }}
-                label="Create new station"
-                {...a11yProps(1)}
-              />
-              <Tab
-                style={{ color: 'white', fontSize: 15 }}
-                label="Add station to route"
-                {...a11yProps(2)}
-              />
-              <Tab
-                style={{ color: 'white', fontSize: 15 }}
-                label="Create new train"
-                {...a11yProps(3)}
-              />
-              <Tab
-                style={{ color: 'white', fontSize: 15 }}
-                label="Create train departure"
-                {...a11yProps(4)}
-              />
-              <Tab
-                style={{ color: 'white', fontSize: 15 }}
-                label="Create train at station"
-                {...a11yProps(5)}
-              />
-              <Tab
-                style={{ color: 'white', fontSize: 15 }}
-                label="Create carriage"
-                {...a11yProps(6)}
-              />
+              {tabs.map((tab, index) => (
+                <Tab
+                  style={{ color: 'white', fontSize: 15 }}
+                  label={tab.title}
+                  {...a11yProps(index)}
+                />
+              ))}
             </Tabs>
-            <TabPanel value={value} index={0}>
-              <CreateRoute />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <CreateStation />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-              <AddStationToRoute />
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-              <CreateTrain />
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-              <CreateTrainDeparture />
-            </TabPanel>
-            <TabPanel value={value} index={5}>
-              <CreateTrainAtStation />
-            </TabPanel>
-            <TabPanel value={value} index={6}>
-              <CreateCarriage />
-            </TabPanel>
+
+            {tabs.map((tab, index) => (
+              <TabPanel value={value} index={index}>
+                <tab.component />
+              </TabPanel>
+            ))}
           </Box>
-
-          {/* <form onSubmit={logout}>
-            <button type="submit">Logout</button>
-          </form>
-
-          <h1 style={{ marginBottom: '20px' }}>TickTrip</h1>
-
-          <h2
-            style={{
-              marginBottom: '20px',
-            }}
-          >
-            <Link to={path + '/create-route'} style={{ marginRight: '20px' }}>
-              Create new route
-            </Link>
-            <Link to={path + '/create-station'} style={{ marginRight: '20px' }}>
-              Create new station
-            </Link>
-            <Link
-              to={path + '/add-station-to-route'}
-              style={{ marginRight: '20px' }}
-            >
-              Add station to route
-            </Link>
-            <Link to={path + '/create-train'} style={{ marginRight: '20px' }}>
-              Create new train
-            </Link>
-            <Link
-              to={path + '/create-train-departure'}
-              style={{ marginRight: '20px' }}
-            >
-              Create train departure
-            </Link>
-            <Link
-              to={path + '/create-train-at-station'}
-              style={{ marginRight: '20px' }}
-            >
-              Create train at station
-            </Link>
-            <Link
-              to={path + '/create-carriage'}
-              style={{ marginRight: '20px' }}
-            >
-              Create carriage
-            </Link>
-          </h2>
-
-          <Switch>
-            <Route
-              exact
-              path={path + '/create-route'}
-              component={CreateRoute}
-            />
-            <Route
-              exact
-              path={path + '/create-station'}
-              component={CreateStation}
-            />
-            <Route
-              exact
-              path={path + '/create-train'}
-              component={CreateTrain}
-            />
-            <Route
-              exact
-              path={path + '/add-station-to-route'}
-              component={AddStationToRoute}
-            />
-            <Route
-              exact
-              path={path + '/create-train-departure'}
-              component={CreateTrainDeparture}
-            />
-            <Route
-              exact
-              path={path + '/create-train-at-station'}
-              component={CreateTrainAtStation}
-            />
-            <Route
-              exact
-              path={path + '/create-carriage'}
-              component={CreateCarriage}
-            />
-
-            <Route
-              path=""
-              render={() => <Redirect to={path + '/create-route'} />}
-            />
-          </Switch> */}
         </div>
       </div>
     </div>

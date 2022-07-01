@@ -172,7 +172,7 @@ export const localization: Localization = {
     ukrainian: 'Потяг',
   },
   type: {
-    english: 'Train type',
+    english: 'Type',
     ukrainian: 'Тип',
   },
   addCarriage: {

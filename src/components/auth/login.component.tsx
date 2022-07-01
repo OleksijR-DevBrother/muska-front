@@ -21,8 +21,8 @@ export const Login: FunctionComponent = () => {
   const loginFunction = async (e: any) => {
     e.preventDefault();
 
-    const url = new URL('/user/login', config.authUrl).toString();
-    const res = await axios.post(url, {
+    let url = new URL('/user/login', config.authUrl).toString();
+    let res = await axios.post(url, {
       phoneNumber,
       password,
     });
@@ -32,13 +32,33 @@ export const Login: FunctionComponent = () => {
       return;
     }
 
-    dispatch(
-      updateUser({
-        accessToken: res.data.accessToken,
-        refreshToken: res.data.refreshToken,
-        role: res.data.role,
-      }),
-    );
+    const userUpdate = {
+      accessToken: res.data.accessToken,
+      refreshToken: res.data.refreshToken,
+      role: res.data.role,
+    };
+
+    url = new URL('/user/verify', config.authUrl).toString();
+    res = await axios.post(url, {
+      accessToken: res.data.accessToken,
+    });
+
+    if (res.status > 300) {
+      setError(res.data.message);
+      return;
+    }
+
+    Object.assign(userUpdate, {
+      id: res.data.id,
+      name: res.data.name,
+      surname: res.data.surname,
+      patronymic: res.data.patronymic,
+      DOB: res.data.DOB,
+      address: res.data.address,
+      phoneNumber: res.data.phoneNumber,
+    });
+
+    dispatch(updateUser(userUpdate));
   };
 
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;

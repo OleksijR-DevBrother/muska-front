@@ -5,4 +5,11 @@ export class User {
   refreshToken?: string;
   role?: string;
   language: Language = Language.ENGLISH;
+  id?: string;
+  name?: string;
+  surname?: string;
+  patronymic?: string;
+  DOB?: string;
+  address?: string;
+  phoneNumber?: string;
 }

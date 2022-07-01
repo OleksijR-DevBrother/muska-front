@@ -7,28 +7,23 @@ import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
 import { localization } from '../../localization';
 
-export const AddStationToRoute: FunctionComponent = () => {
+export const UpdateStation: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
 
   const [stationId, setStationId] = useState('');
-  const [routeId, setRouteId] = useState('');
-  const [stationIndex, setStationIndex] = useState(1);
+  const [stationName, setStationName] = useState('');
   const [error, setError] = useState('');
 
-  const createRouteStationFunction = async (e: any) => {
+  const updateStationFunction = async (e: any) => {
     e.preventDefault();
 
     const url = new URL(
-      '/routes/stations-on-route/create',
+      `/stations/update/${stationId}`,
       config.trainsUrl,
     ).toString();
-    const res = await axios.post(
+    const res = await axios.patch(
       url,
-      {
-        stationId,
-        routeId,
-        stationIndexOnTheRoute: stationIndex - 1,
-      },
+      { name: stationName },
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
@@ -42,10 +37,15 @@ export const AddStationToRoute: FunctionComponent = () => {
     }
 
     setError('');
+
+    loadData();
   };
 
   const [stations, setStations] = useState([] as any[]);
-  const [routes, setRoutes] = useState([] as any[]);
+
+  if (stationId && stations.length && !stationName) {
+    setStationName(stations.find((station) => station.id === stationId).name);
+  }
 
   const loadData = async () => {
     const { data: stations } = await axios.get(
@@ -61,20 +61,6 @@ export const AddStationToRoute: FunctionComponent = () => {
     if (stations.length) {
       setStationId(stations[0].id);
     }
-
-    const { data: routes } = await axios.get(
-      new URL('/routes/get/list', config.trainsUrl).toString(),
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      },
-    );
-    setRoutes(routes);
-
-    if (routes.length) {
-      setRouteId(routes[0].id);
-    }
   };
 
   useEffect(() => {
@@ -85,52 +71,37 @@ export const AddStationToRoute: FunctionComponent = () => {
   return (
     <form
       className="form"
-      onSubmit={createRouteStationFunction}
+      onSubmit={updateStationFunction}
       style={{ fontSize: 15 }}
     >
       {localization.station[user.language]}
       <select
         style={{ color: 'black' }}
-        onChange={(e) => setStationId(e.target.value)}
+        onChange={(e) => {
+          setStationName('');
+          setStationId(e.target.value);
+        }}
         value={stationId}
       >
         {stations.map((station) => (
-          <option
-            key={station.id}
-            value={station.id}
-            style={{ color: 'black' }}
-          >
+          <option key={station.id} value={station.id}>
             {station.name}
           </option>
         ))}
       </select>
+
       <br />
       <br />
-      {localization.route[user.language]}
-      <select
-        style={{ color: 'black' }}
-        onChange={(e) => setRouteId(e.target.value)}
-        value={routeId}
-      >
-        {routes.map((route) => (
-          <option key={route.id} value={route.id}>
-            {route.name}
-          </option>
-        ))}
-      </select>
-      <br />
-      <br />
-      Index
       <input
-        type="number"
-        placeholder="Index on the route"
-        value={stationIndex}
-        onChange={(e) => setStationIndex(Number(e.target.value))}
+        type="text"
+        placeholder={localization.naming[user.language]}
+        value={stationName}
+        onChange={(e) => setStationName(e.target.value)}
         required
       />
-      <button type="submit">
-        {localization.addStationToRoute[user.language]}
-      </button>
+
+      <button type="submit">Update station</button>
+
       {errorAlert}
     </form>
   );

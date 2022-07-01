@@ -83,10 +83,7 @@ export const SearchWaysBetweenStations: FunctionComponent = () => {
       {localization.from[user.language]}
       <select
         style={{ color: 'black' }}
-        onChange={(e) => {
-          console.log(e.target.value);
-          setFromStationId(e.target.value);
-        }}
+        onChange={(e) => setFromStationId(e.target.value)}
         value={fromStationId}
       >
         {stations.map((station) => (

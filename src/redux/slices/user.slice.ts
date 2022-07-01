@@ -25,6 +25,27 @@ const slice = createSlice({
       if (action.payload.language !== undefined) {
         state.language = action.payload.language;
       }
+      if (action.payload.id !== undefined) {
+        state.id = action.payload.id;
+      }
+      if (action.payload.name !== undefined) {
+        state.name = action.payload.name;
+      }
+      if (action.payload.surname !== undefined) {
+        state.surname = action.payload.surname;
+      }
+      if (action.payload.patronymic !== undefined) {
+        state.patronymic = action.payload.patronymic;
+      }
+      if (action.payload.DOB !== undefined) {
+        state.DOB = action.payload.DOB;
+      }
+      if (action.payload.address !== undefined) {
+        state.address = action.payload.address;
+      }
+      if (action.payload.phoneNumber !== undefined) {
+        state.phoneNumber = action.payload.phoneNumber;
+      }
     },
   },
 });

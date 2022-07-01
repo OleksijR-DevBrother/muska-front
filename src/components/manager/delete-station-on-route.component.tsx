@@ -7,34 +7,57 @@ import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
 import { localization } from '../../localization';
 
-export const AddStationToRoute: FunctionComponent = () => {
+export const DeleteStationFromRoute: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
 
   const [stationId, setStationId] = useState('');
   const [routeId, setRouteId] = useState('');
-  const [stationIndex, setStationIndex] = useState(1);
+  const [routeStationId, setRouteStationId] = useState('');
   const [error, setError] = useState('');
 
-  const createRouteStationFunction = async (e: any) => {
+  const loadRouteStation = async () => {
+    const url = new URL(
+      '/routes/route-stations/get',
+      config.trainsUrl,
+    ).toString();
+    const res = await axios.get(url, {
+      params: {
+        routeId,
+        stationId,
+      },
+      headers: {
+        Authorization: `Bearer ${user.accessToken}`,
+      },
+    });
+
+    if (res.status > 300) {
+      setError(res.data.message);
+      return;
+    }
+
+    setError('');
+
+    setRouteStationId(res.data.id);
+  };
+
+  useEffect(() => {
+    if (routeId && stationId) {
+      loadRouteStation();
+    }
+  }, [routeId, stationId]);
+
+  const deleteRouteStationFunction = async (e: any) => {
     e.preventDefault();
 
     const url = new URL(
-      '/routes/stations-on-route/create',
+      `/routes/stations/delete/${routeStationId}`,
       config.trainsUrl,
     ).toString();
-    const res = await axios.post(
-      url,
-      {
-        stationId,
-        routeId,
-        stationIndexOnTheRoute: stationIndex - 1,
+    const res = await axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${user.accessToken}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      },
-    );
+    });
 
     if (res.status > 300) {
       setError(res.data.message);
@@ -85,7 +108,7 @@ export const AddStationToRoute: FunctionComponent = () => {
   return (
     <form
       className="form"
-      onSubmit={createRouteStationFunction}
+      onSubmit={deleteRouteStationFunction}
       style={{ fontSize: 15 }}
     >
       {localization.station[user.language]}
@@ -106,6 +129,7 @@ export const AddStationToRoute: FunctionComponent = () => {
       </select>
       <br />
       <br />
+
       {localization.route[user.language]}
       <select
         style={{ color: 'black' }}
@@ -119,18 +143,8 @@ export const AddStationToRoute: FunctionComponent = () => {
         ))}
       </select>
       <br />
-      <br />
-      Index
-      <input
-        type="number"
-        placeholder="Index on the route"
-        value={stationIndex}
-        onChange={(e) => setStationIndex(Number(e.target.value))}
-        required
-      />
-      <button type="submit">
-        {localization.addStationToRoute[user.language]}
-      </button>
+
+      <button type="submit">Delete</button>
       {errorAlert}
     </form>
   );
