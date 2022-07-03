@@ -111,6 +111,10 @@ export const localization: Localization = {
     english: 'Buy ticket',
     ukrainian: 'Купити квиток',
   },
+  bookTicket: {
+    english: 'Book ticket',
+    ukrainian: 'Забронювати квиток',
+  },
   name: {
     english: 'Name',
     ukrainian: 'Iм`я',

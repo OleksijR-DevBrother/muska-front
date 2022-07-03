@@ -159,6 +159,21 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
     );
   };
 
+  const bookTicket = async () => {
+    await axios.post(
+      new URL('/tickets/book', config.trainsUrl).toString(),
+      {
+        sittingId: selectedSittingId,
+        departureDateTime,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      },
+    );
+  };
+
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
   return (
     <form className="form" onSubmit={SearchTrains} style={{ fontSize: 15 }}>
@@ -261,6 +276,9 @@ export const SearchTrainsBetweenStations: FunctionComponent = () => {
               ) : null}
               <button onClick={buyTicket}>
                 {localization.buyTicket[user.language]}
+              </button>
+              <button onClick={bookTicket}>
+                {localization.bookTicket[user.language]}
               </button>
             </>
           ) : null}

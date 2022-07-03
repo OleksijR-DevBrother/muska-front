@@ -49,28 +49,26 @@ export const ReturnTicket: FunctionComponent = () => {
 
   return tickets.length ? (
     <form onSubmit={returnTicketFunction}>
-      {tickets.map((user1) => (
-        <div style={{ margin: '10px' }} key={user1.id}>
-          <select
-            style={{ color: 'black', fontSize: 15 }}
-            onChange={(e) => setTicketId(e.target.value)}
-            value={ticketId}
-          >
-            {tickets.map((ticket) => (
-              <option key={ticket.id} value={ticket.id}>
-                {ticket.routeName}
-                {' | '}
-                {new Date(ticket.departureDateTime).toUTCString()}
-              </option>
-            ))}
-          </select>
+      <div style={{ margin: '10px' }}>
+        <select
+          style={{ color: 'black', fontSize: 15 }}
+          onChange={(e) => setTicketId(e.target.value)}
+          value={ticketId}
+        >
+          {tickets.map((ticket) => (
+            <option key={ticket.id} value={ticket.id}>
+              {ticket.routeName}
+              {' | '}
+              {new Date(ticket.departureDateTime).toUTCString()}
+            </option>
+          ))}
+        </select>
+      </div>
 
-          <br />
-          <br />
+      <br />
+      <br />
 
-          <button type="submit">Return ticket</button>
-        </div>
-      ))}
+      <button type="submit">Return ticket</button>
     </form>
   ) : (
     <h2>You don't have any tickets</h2>
