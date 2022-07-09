@@ -100,7 +100,7 @@ export const UpdateRoute: FunctionComponent = () => {
         required
       />
 
-      <button type="submit">Update route</button>
+      <button type="submit">{localization.updateRoute[user.language]}</button>
 
       {errorAlert}
     </form>

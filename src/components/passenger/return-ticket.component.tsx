@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
+import { localization } from '../../localization';
 
 export const ReturnTicket: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
@@ -68,9 +69,9 @@ export const ReturnTicket: FunctionComponent = () => {
       <br />
       <br />
 
-      <button type="submit">Return ticket</button>
+      <button type="submit">{localization.returnTicket[user.language]}</button>
     </form>
   ) : (
-    <h2>You don't have any tickets</h2>
+    <h2>{localization.youDontHaveTickets[user.language]}</h2>
   );
 };

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { config } from '../../config';
 import { useStoreDispatch, useStoreSelector } from '../../redux/store';
 import { updateUser } from '../../redux/slices/user.slice';
+import { localization } from '../../localization';
 
 export const UpdateProfile: FunctionComponent = () => {
   const user = useStoreSelector((state) => state.user);
@@ -74,44 +75,44 @@ export const UpdateProfile: FunctionComponent = () => {
     <form onSubmit={updateUserFunction}>
       <input
         type="text"
-        placeholder="Name"
+        placeholder={localization.name[user.language]}
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
       />
       <input
         type="text"
-        placeholder="Surname"
+        placeholder={localization.surname[user.language]}
         value={surname}
         onChange={(e) => setSurname(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Patronymic"
+        placeholder={localization.patronimic[user.language]}
         value={patronymic}
         onChange={(e) => setPatronymic(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Date of Birth"
+        placeholder={localization.DOB[user.language]}
         value={DOB}
         onChange={(e) => setDOB(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Address"
+        placeholder={localization.address[user.language]}
         value={address}
         onChange={(e) => setAddress(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Phone"
+        placeholder={localization.phone[user.language]}
         value={phoneNumber}
         onChange={(e) => setPhoneNumber(e.target.value)}
         required
       />
 
-      <button type="submit">Update profile</button>
+      <button type="submit">{localization.updateProfile[user.language]}</button>
 
       {errorAlert}
     </form>

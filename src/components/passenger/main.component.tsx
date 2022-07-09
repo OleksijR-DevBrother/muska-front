@@ -108,12 +108,12 @@ export const PassengerMain: FunctionComponent = () => {
               />
               <Tab
                 style={{ color: 'white', fontSize: 15 }}
-                label="Update profile"
+                label={localization.updateProfile[user.language]}
                 {...a11yProps(2)}
               />
               <Tab
                 style={{ color: 'white', fontSize: 15 }}
-                label="Return ticket"
+                label={localization.returnTicket[user.language]}
                 {...a11yProps(3)}
               />
             </Tabs>

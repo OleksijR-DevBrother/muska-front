@@ -114,7 +114,7 @@ export const DeleteCarriage: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      Index in train
+      {localization.indexInTrain[user.language]}
       <input
         type="number"
         placeholder="Index in train"
@@ -123,7 +123,9 @@ export const DeleteCarriage: FunctionComponent = () => {
         required
       />
       <br />
-      <button type="submit">Delete carriage</button>
+      <button type="submit">
+        {localization.deleteCarriage[user.language]}
+      </button>
       {errorAlert}
     </form>
   );

@@ -100,7 +100,7 @@ export const UpdateTrain: FunctionComponent = () => {
         required
       />
 
-      <button type="submit">Update train</button>
+      <button type="submit">{localization.updateTrain[user.language]}</button>
 
       {errorAlert}
     </form>

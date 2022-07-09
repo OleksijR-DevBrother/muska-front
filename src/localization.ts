@@ -223,4 +223,68 @@ export const localization: Localization = {
     english: 'Train stand',
     ukrainian: 'Зупинка',
   },
+  updateProfile: {
+    english: 'Update Profile',
+    ukrainian: 'Оновити профіль',
+  },
+  returnTicket: {
+    english: 'Return Ticket',
+    ukrainian: 'Повернути квиток',
+  },
+  youDontHaveTickets: {
+    english: "You don't have any tickets",
+    ukrainian: 'У вас ще немає квитків',
+  },
+  updateRoute: {
+    english: 'Update route',
+    ukrainian: 'Оновити назву маршруту',
+  },
+  deleteRoute: {
+    english: 'Delete route',
+    ukrainian: 'Видалити назву маршруту',
+  },
+  updateStation: {
+    english: 'Update station',
+    ukrainian: 'Оновити назву станції',
+  },
+  deleteStation: {
+    english: 'Delete station',
+    ukrainian: 'Видалити назву станції',
+  },
+  deleteCarriage: {
+    english: 'Delete carriage',
+    ukrainian: 'Видалити вагон',
+  },
+  deleteTrainDeparture: {
+    english: 'Delete train departure',
+    ukrainian: 'Видалити час відправки потяга',
+  },
+  deleteTrain: {
+    english: 'Delete train',
+    ukrainian: 'Видалити потяг',
+  },
+  updateTrain: {
+    english: 'Update train',
+    ukrainian: 'Оновити потяг',
+  },
+  updateStationOnRoute: {
+    english: 'Update station on route',
+    ukrainian: 'Оновити станцію на маршруті',
+  },
+  deleteStationOnRoute: {
+    english: 'Delete station on route',
+    ukrainian: 'Видалити станцію з маршрута',
+  },
+  indexInTrain: {
+    english: 'Inedx in train',
+    ukrainian: 'Номер у потязі',
+  },
+  numberOfSittings: {
+    english: 'Number of sittings',
+    ukrainian: 'Кількість місць для сидіння',
+  },
+  ticketPrice: {
+    english: 'Ticket price',
+    ukrainian: 'Вартість квитка',
+  },
 };

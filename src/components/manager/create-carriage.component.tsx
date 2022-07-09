@@ -117,7 +117,7 @@ export const CreateCarriage: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      Index in train
+      {localization.indexInTrain[user.language]}
       <input
         type="number"
         placeholder="Index in train"
@@ -126,7 +126,7 @@ export const CreateCarriage: FunctionComponent = () => {
         required
       />
       <br />
-      Number of sittings
+      {localization.numberOfSittings[user.language]}
       <input
         type="number"
         placeholder="Number of sittings"
@@ -135,7 +135,7 @@ export const CreateCarriage: FunctionComponent = () => {
         required
       />
       <br />
-      Ticket price
+      {localization.ticketPrice[user.language]}
       <input
         type="number"
         placeholder="Ticket price"

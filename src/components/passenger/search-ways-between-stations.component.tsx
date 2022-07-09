@@ -108,7 +108,7 @@ export const SearchWaysBetweenStations: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      <button type="submit">Search</button>
+      <button type="submit">{localization.search[user.language]}</button>
       {errorAlert}
       {searchResults.map((result, index) => (
         <div key={index}>

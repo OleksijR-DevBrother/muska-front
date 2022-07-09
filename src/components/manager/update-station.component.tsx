@@ -100,7 +100,7 @@ export const UpdateStation: FunctionComponent = () => {
         required
       />
 
-      <button type="submit">Update station</button>
+      <button type="submit">{localization.updateStation[user.language]}</button>
 
       {errorAlert}
     </form>

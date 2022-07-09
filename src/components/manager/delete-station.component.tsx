@@ -76,7 +76,7 @@ export const DeleteStation: FunctionComponent = () => {
         ))}
       </select>
 
-      <button type="submit">Delete station</button>
+      <button type="submit">{localization.deleteStation[user.language]}</button>
 
       {errorAlert}
     </form>

@@ -84,71 +84,71 @@ export const ManagerMain: FunctionComponent = () => {
 
   const tabs = [
     {
-      title: 'Create new route',
+      title: localization.createRoute[user.language],
       component: CreateRoute,
     },
     {
-      title: 'Update route',
+      title: localization.updateRoute[user.language],
       component: UpdateRoute,
     },
     {
-      title: 'Delete route',
+      title: localization.deleteRoute[user.language],
       component: DeleteRoute,
     },
     {
-      title: 'Create new station',
+      title: localization.createStation[user.language],
       component: CreateStation,
     },
     {
-      title: 'Update station',
+      title: localization.updateStation[user.language],
       component: UpdateStation,
     },
     {
-      title: 'Delete station',
+      title: localization.deleteStation[user.language],
       component: DeleteStation,
     },
     {
-      title: 'Add station to route',
+      title: localization.addStationToRoute[user.language],
       component: AddStationToRoute,
     },
     {
-      title: 'Update station on route',
+      title: localization.updateStationOnRoute[user.language],
       component: UpdateStationOnRoute,
     },
     {
-      title: 'Delete station from route',
+      title: localization.deleteStationOnRoute[user.language],
       component: DeleteStationFromRoute,
     },
     {
-      title: 'Create new train',
+      title: localization.createTrain[user.language],
       component: CreateTrain,
     },
     {
-      title: 'Update train',
+      title: localization.updateTrain[user.language],
       component: UpdateTrain,
     },
     {
-      title: 'Delete train',
+      title: localization.deleteTrain[user.language],
       component: DeleteTrain,
     },
     {
-      title: 'Create train departure',
+      title: localization.createTrainDepartureTime[user.language],
       component: CreateTrainDeparture,
     },
     {
-      title: 'Delete train departure',
+      title: localization.deleteTrainDeparture[user.language],
       component: DeleteTrainDeparture,
     },
     {
-      title: 'Create train at station',
+      title: localization.createTrainAtStation[user.language],
       component: CreateTrainAtStation,
     },
     {
-      title: 'Create new carriage',
+      title: localization.createCarriage[user.language],
       component: CreateCarriage,
     },
     {
-      title: 'Delete carriage',
+      title: localization.deleteCarriage[user.language],
       component: DeleteCarriage,
     },
   ];
