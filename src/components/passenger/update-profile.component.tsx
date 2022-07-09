@@ -14,7 +14,7 @@ export const UpdateProfile: FunctionComponent = () => {
   const [surname, setSurname] = useState(user.surname);
   const [patronymic, setPatronymic] = useState(user.patronymic);
   const [DOB, setDOB] = useState(user.DOB);
-  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+  const [username, setusername] = useState(user.username);
   const [error, setError] = useState('');
 
   const dispatch = useStoreDispatch();
@@ -30,7 +30,7 @@ export const UpdateProfile: FunctionComponent = () => {
         surname,
         patronymic,
         DOB,
-        phoneNumber,
+        username,
       },
       {
         headers: {
@@ -61,7 +61,7 @@ export const UpdateProfile: FunctionComponent = () => {
         surname: res.data.surname,
         patronymic: res.data.patronymic,
         DOB: res.data.DOB,
-        phoneNumber: res.data.phoneNumber,
+        username: res.data.username,
       }),
     );
   };
@@ -97,8 +97,8 @@ export const UpdateProfile: FunctionComponent = () => {
       <input
         type="text"
         placeholder="Phone"
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
+        value={username}
+        onChange={(e) => setusername(e.target.value)}
         required
       />
 

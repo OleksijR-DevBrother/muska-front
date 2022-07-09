@@ -10,5 +10,5 @@ export class User {
   surname?: string;
   patronymic?: string;
   DOB?: string;
-  phoneNumber?: string;
+  username?: string;
 }

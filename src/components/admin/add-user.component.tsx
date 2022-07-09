@@ -14,7 +14,7 @@ export const AddUser: FunctionComponent = () => {
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
   const [DOB, setDOB] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [username, setusername] = useState('');
   const [role, setRole] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -30,7 +30,7 @@ export const AddUser: FunctionComponent = () => {
         surname,
         patronymic,
         DOB,
-        phoneNumber,
+        username,
         role,
         isBlocked: false,
         password,
@@ -85,7 +85,7 @@ export const AddUser: FunctionComponent = () => {
       <input
         type="text"
         placeholder={localization.phone[user.language]}
-        onChange={(e) => setPhoneNumber(e.target.value)}
+        onChange={(e) => setusername(e.target.value)}
         required
       />
       <input

@@ -15,7 +15,7 @@ export const SignUp: FunctionComponent = () => {
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
   const [DOB, setDOB] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [username, setusername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -28,7 +28,7 @@ export const SignUp: FunctionComponent = () => {
       surname,
       patronymic,
       DOB,
-      phoneNumber,
+      username,
       password,
       isBlocked: false,
       role: 'passenger',
@@ -67,7 +67,7 @@ export const SignUp: FunctionComponent = () => {
       <input
         type="text"
         placeholder="Phone"
-        onChange={(e) => setPhoneNumber(e.target.value)}
+        onChange={(e) => setusername(e.target.value)}
         required
       />
       <input
