@@ -12,10 +12,25 @@ export const CreateCarriage: FunctionComponent = () => {
 
   const [trainId, setTrainId] = useState('');
   const [typeName, setTypeName] = useState('');
-  const [indexInTrain, setIndexInTrain] = useState(0);
-  const [numberOfSittings, setNumberOfSittings] = useState(0);
-  const [ticketPrice, setTicketPrice] = useState(0);
+  const [indexInTrain, setIndexInTrain] = useState(1);
+  const [numberOfSittings, setNumberOfSittings] = useState(1);
+  const [ticketPrice, setTicketPrice] = useState(0.01);
   const [error, setError] = useState('');
+
+  const changeToPositiveInt = (
+    value: string,
+    setFunction: React.Dispatch<React.SetStateAction<number>>,
+  ) => {
+    let num = parseInt(value);
+    if (num < 1) num = 1;
+    setFunction(num);
+  };
+
+  const changeTicketPrice = (value: string) => {
+    let price = Math.floor(Number(value) * 100 + 0.1) / 100;
+    if (price < 0) price = 0;
+    setTicketPrice(price);
+  };
 
   const createTrainFunction = async (e: any) => {
     e.preventDefault();
@@ -38,7 +53,17 @@ export const CreateCarriage: FunctionComponent = () => {
     );
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -122,7 +147,7 @@ export const CreateCarriage: FunctionComponent = () => {
         type="number"
         placeholder="Index in train"
         value={indexInTrain}
-        onChange={(e) => setIndexInTrain(Number(e.target.value))}
+        onChange={(e) => changeToPositiveInt(e.target.value, setIndexInTrain)}
         required
       />
       <br />
@@ -131,7 +156,9 @@ export const CreateCarriage: FunctionComponent = () => {
         type="number"
         placeholder="Number of sittings"
         value={numberOfSittings}
-        onChange={(e) => setNumberOfSittings(Number(e.target.value))}
+        onChange={(e) =>
+          changeToPositiveInt(e.target.value, setNumberOfSittings)
+        }
         required
       />
       <br />
@@ -139,8 +166,10 @@ export const CreateCarriage: FunctionComponent = () => {
       <input
         type="number"
         placeholder="Ticket price"
+        min={0}
+        step={0.01}
         value={ticketPrice}
-        onChange={(e) => setTicketPrice(Number(e.target.value))}
+        onChange={(e) => changeTicketPrice(e.target.value)}
         required
       />
       <br />

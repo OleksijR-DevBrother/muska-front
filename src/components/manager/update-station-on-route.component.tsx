@@ -16,6 +16,10 @@ export const UpdateStationOnRoute: FunctionComponent = () => {
   const [stationIndex, setStationIndex] = useState(1);
   const [error, setError] = useState('');
 
+  const changeStationindex = (index: string) => {
+    setStationIndex(parseInt(index));
+  };
+
   const loadRouteStation = async () => {
     const url = new URL(
       '/routes/route-stations/get',
@@ -32,7 +36,17 @@ export const UpdateStationOnRoute: FunctionComponent = () => {
     });
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -68,7 +82,17 @@ export const UpdateStationOnRoute: FunctionComponent = () => {
     );
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -156,7 +180,7 @@ export const UpdateStationOnRoute: FunctionComponent = () => {
         type="number"
         placeholder="Index on the route"
         value={stationIndex}
-        onChange={(e) => setStationIndex(Number(e.target.value))}
+        onChange={(e) => changeStationindex(e.target.value)}
         required
       />
       <button type="submit">Update</button>

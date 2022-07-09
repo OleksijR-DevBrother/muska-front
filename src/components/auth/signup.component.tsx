@@ -14,8 +14,8 @@ export const SignUp: FunctionComponent = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
-  const [DOB, setDOB] = useState('');
-  const [username, setusername] = useState('');
+  const [DOB, setDOB] = useState('2007-01-01');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -34,10 +34,22 @@ export const SignUp: FunctionComponent = () => {
       role: 'passenger',
     });
 
-    if (res.data.error) {
-      setError(res.data.error);
+    if (res.status > 300) {
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
+
+    window.location.pathname = '';
   };
 
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
@@ -45,34 +57,35 @@ export const SignUp: FunctionComponent = () => {
     <form onSubmit={signUpFunction}>
       <input
         type="text"
-        placeholder="Name"
+        placeholder={localization.name[user.language]}
         onChange={(e) => setName(e.target.value)}
         required
       />
       <input
         type="text"
-        placeholder="Surname"
+        placeholder={localization.surname[user.language]}
         onChange={(e) => setSurname(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Patronymic"
+        placeholder={localization.patronimic[user.language]}
         onChange={(e) => setPatronymic(e.target.value)}
       />
       <input
-        type="text"
-        placeholder="Date of Birth"
+        type="date"
+        placeholder={localization.DOB[user.language]}
+        value={DOB}
         onChange={(e) => setDOB(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Phone"
-        onChange={(e) => setusername(e.target.value)}
+        placeholder={localization.phone[user.language]}
+        onChange={(e) => setUsername(e.target.value)}
         required
       />
       <input
         type="password"
-        placeholder="Password"
+        placeholder={localization.password[user.language]}
         onChange={(e) => setPassword(e.target.value)}
         required
       />

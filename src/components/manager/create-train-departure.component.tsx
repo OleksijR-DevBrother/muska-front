@@ -27,6 +27,20 @@ export const CreateTrainDeparture: FunctionComponent = () => {
   const [minute, setMinute] = useState(0);
   const [error, setError] = useState('');
 
+  const changeHour = (value: string) => {
+    let hour = parseInt(value);
+    if (hour < 0) hour = 0;
+    if (hour > 23) hour = 23;
+    setHour(hour);
+  };
+
+  const changeMinute = (value: string) => {
+    let minute = parseInt(value);
+    if (minute < 0) minute = 0;
+    if (minute > 59) minute = 59;
+    setMinute(minute);
+  };
+
   const createTrainFunction = async (e: any) => {
     e.preventDefault();
 
@@ -49,7 +63,17 @@ export const CreateTrainDeparture: FunctionComponent = () => {
     );
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -99,6 +123,7 @@ export const CreateTrainDeparture: FunctionComponent = () => {
       </select>
       <br />
       <br />
+
       {localization.day[user.language]}
       <select
         style={{ color: 'black' }}
@@ -113,6 +138,7 @@ export const CreateTrainDeparture: FunctionComponent = () => {
       </select>
       <br />
       <br />
+
       {localization.direction[user.language]}
       <select
         style={{ color: 'black' }}
@@ -128,26 +154,30 @@ export const CreateTrainDeparture: FunctionComponent = () => {
       </select>
       <br />
       <br />
+
       {localization.hour[user.language]}
       <input
         type="number"
         placeholder="Hour"
         value={hour}
-        onChange={(e) => setHour(Number(e.target.value))}
+        onChange={(e) => changeHour(e.target.value)}
         required
       />
       <br />
+
       {localization.minute[user.language]}
       <input
         type="number"
         placeholder="Minute"
         value={minute}
-        onChange={(e) => setMinute(Number(e.target.value))}
+        onChange={(e) => changeMinute(e.target.value)}
         required
       />
+
       <button type="submit">
         {localization.createTrainDepartureTime[user.language]}
       </button>
+
       {errorAlert}
     </form>
   );

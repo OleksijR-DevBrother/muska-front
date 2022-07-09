@@ -12,7 +12,7 @@ export const DeleteCarriage: FunctionComponent = () => {
 
   const [carriages, setCarriages] = useState([] as any[]);
   const [trainId, setTrainId] = useState('');
-  const [indexInTrain, setIndexInTrain] = useState(0);
+  const [carriageId, setCarriageId] = useState('');
   const [error, setError] = useState('');
 
   const loadCarriages = async () => {
@@ -27,31 +27,32 @@ export const DeleteCarriage: FunctionComponent = () => {
     });
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
     setError('');
 
     setCarriages(res.data);
+    if (res.data.length) setCarriageId(res.data[0].id);
   };
 
   useEffect(() => {
-    if (trainId) {
-      loadCarriages();
-    }
+    loadCarriages();
   }, [trainId]);
 
   const deleteCarriageFunction = async (e: any) => {
     e.preventDefault();
-
-    const carriageId = carriages.find(
-      (carriage) => (carriage.indexInTrain = indexInTrain),
-    )?.id;
-    if (!carriageId) {
-      setError("Train doesn't have carriage with this index");
-      return;
-    }
 
     const url = new URL(
       `/carriages/delete/${carriageId}`,
@@ -64,11 +65,22 @@ export const DeleteCarriage: FunctionComponent = () => {
     });
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
     setError('');
+    loadData();
   };
 
   const [trains, setTrains] = useState([] as any[]);
@@ -114,16 +126,29 @@ export const DeleteCarriage: FunctionComponent = () => {
       </select>
       <br />
       <br />
-      Index in train
-      <input
-        type="number"
-        placeholder="Index in train"
-        value={indexInTrain}
-        onChange={(e) => setIndexInTrain(Number(e.target.value))}
-        required
-      />
-      <br />
-      <button type="submit">Delete carriage</button>
+
+      {carriages.length ? (
+        <>
+          Index in train
+          <select
+            style={{ color: 'black' }}
+            onChange={(e) => setCarriageId(e.target.value)}
+            value={carriageId}
+          >
+            {carriages.map((carriage) => (
+              <option key={carriage.id} value={carriage.id}>
+                {carriage.indexInTrain}
+              </option>
+            ))}
+          </select>
+          <br />
+          <br />
+          <button type="submit">Delete carriage</button>
+        </>
+      ) : (
+        <h2>This train doesn't have carriages</h2>
+      )}
+
       {errorAlert}
     </form>
   );

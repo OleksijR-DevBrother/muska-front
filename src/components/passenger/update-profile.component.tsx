@@ -39,8 +39,18 @@ export const UpdateProfile: FunctionComponent = () => {
       },
     );
 
-    if (res.data.error) {
-      setError(res.data.error);
+    if (res.status > 300) {
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -50,7 +60,17 @@ export const UpdateProfile: FunctionComponent = () => {
     });
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -89,7 +109,7 @@ export const UpdateProfile: FunctionComponent = () => {
         onChange={(e) => setPatronymic(e.target.value)}
       />
       <input
-        type="text"
+        type="date"
         placeholder="Date of Birth"
         value={DOB}
         onChange={(e) => setDOB(e.target.value)}
