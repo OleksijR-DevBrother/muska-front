@@ -10,6 +10,16 @@ import { localization } from '../../localization';
 export const DeleteTrainDeparture: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
 
+  const days = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+
   const [departureId, setDepartureId] = useState('');
   const [departures, setDepartures] = useState([] as any[]);
   const [trainId, setTrainId] = useState('');
@@ -30,7 +40,17 @@ export const DeleteTrainDeparture: FunctionComponent = () => {
     });
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -59,7 +79,17 @@ export const DeleteTrainDeparture: FunctionComponent = () => {
     });
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -87,6 +117,18 @@ export const DeleteTrainDeparture: FunctionComponent = () => {
   useEffect(() => {
     loadData();
   }, []);
+
+  const msToDateTimeString = (ms: number) => {
+    const day = days[Math.floor(ms / (24 * 60 * 60_000))];
+
+    let hour = String(Math.floor(ms / (60 * 60_000)) % 24);
+    if (hour.length === 1) hour = '0' + hour;
+
+    let minute = String(Math.floor(ms / 60_000) % 60);
+    if (minute.length === 1) minute = '0' + minute;
+
+    return `${day}, ${hour}:${minute}`;
+  };
 
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
   return (
@@ -117,7 +159,7 @@ export const DeleteTrainDeparture: FunctionComponent = () => {
       >
         {departures.map((departure) => (
           <option key={departure.id} value={departure.id}>
-            {departure.time} {departure.direction}
+            {msToDateTimeString(departure.time)} | {departure.direction}
           </option>
         ))}
       </select>

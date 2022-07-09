@@ -40,7 +40,17 @@ export const SearchWaysBetweenStations: FunctionComponent = () => {
     });
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 

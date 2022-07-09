@@ -7,17 +7,17 @@ import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
 import { localization } from '../../localization';
 
-export const DeleteStation: FunctionComponent = () => {
+export const DeleteCarriageType: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
 
-  const [stationId, setStationId] = useState('');
+  const [typeName, setTypeName] = useState('');
   const [error, setError] = useState('');
 
-  const deleteStationFunction = async (e: any) => {
+  const deleteCarriageFunction = async (e: any) => {
     e.preventDefault();
 
     const url = new URL(
-      `/stations/delete/${stationId}`,
+      `/carriages/types/delete/${typeName}`,
       config.trainsUrl,
     ).toString();
     const res = await axios.delete(url, {
@@ -44,21 +44,21 @@ export const DeleteStation: FunctionComponent = () => {
     setError('');
   };
 
-  const [stations, setStations] = useState([] as any[]);
+  const [types, setTypes] = useState([] as any[]);
 
   const loadData = async () => {
-    const { data: stations } = await axios.get(
-      new URL('/stations/get/list', config.trainsUrl).toString(),
+    const { data: carriages } = await axios.get(
+      new URL('/carriages/types/get/list', config.trainsUrl).toString(),
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
       },
     );
-    setStations(stations);
+    setTypes(carriages);
 
-    if (stations.length) {
-      setStationId(stations[0].id);
+    if (carriages.length) {
+      setTypeName(carriages[0].id);
     }
   };
 
@@ -70,23 +70,25 @@ export const DeleteStation: FunctionComponent = () => {
   return (
     <form
       className="form"
-      onSubmit={deleteStationFunction}
+      onSubmit={deleteCarriageFunction}
       style={{ fontSize: 15 }}
     >
-      {localization.station[user.language]}
+      {localization.carriageType[user.language]}
       <select
         style={{ color: 'black' }}
-        onChange={(e) => setStationId(e.target.value)}
-        value={stationId}
+        onChange={(e) => setTypeName(e.target.value)}
+        value={typeName}
       >
-        {stations.map((station) => (
-          <option key={station.id} value={station.id}>
-            {station.name}
+        {types.map((carriage) => (
+          <option key={carriage.id} value={carriage.id}>
+            {carriage.name}
           </option>
         ))}
       </select>
+      <br />
+      <br />
 
-      <button type="submit">{localization.deleteStation[user.language]}</button>
+      <button type="submit">Delete carriage type</button>
 
       {errorAlert}
     </form>

@@ -15,8 +15,7 @@ export const UpdateProfile: FunctionComponent = () => {
   const [surname, setSurname] = useState(user.surname);
   const [patronymic, setPatronymic] = useState(user.patronymic);
   const [DOB, setDOB] = useState(user.DOB);
-  const [address, setAddress] = useState(user.address);
-  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+  const [username, setUsername] = useState(user.username);
   const [error, setError] = useState('');
 
   const dispatch = useStoreDispatch();
@@ -32,8 +31,7 @@ export const UpdateProfile: FunctionComponent = () => {
         surname,
         patronymic,
         DOB,
-        address,
-        phoneNumber,
+        username,
       },
       {
         headers: {
@@ -42,8 +40,18 @@ export const UpdateProfile: FunctionComponent = () => {
       },
     );
 
-    if (res.data.error) {
-      setError(res.data.error);
+    if (res.status > 300) {
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -53,7 +61,17 @@ export const UpdateProfile: FunctionComponent = () => {
     });
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -64,8 +82,7 @@ export const UpdateProfile: FunctionComponent = () => {
         surname: res.data.surname,
         patronymic: res.data.patronymic,
         DOB: res.data.DOB,
-        address: res.data.address,
-        phoneNumber: res.data.phoneNumber,
+        username: res.data.username,
       }),
     );
   };
@@ -93,22 +110,16 @@ export const UpdateProfile: FunctionComponent = () => {
         onChange={(e) => setPatronymic(e.target.value)}
       />
       <input
-        type="text"
+        type="date"
         placeholder={localization.DOB[user.language]}
         value={DOB}
         onChange={(e) => setDOB(e.target.value)}
       />
       <input
         type="text"
-        placeholder={localization.address[user.language]}
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder={localization.phone[user.language]}
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         required
       />
 

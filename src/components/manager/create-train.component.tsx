@@ -34,7 +34,17 @@ export const CreateTrain: FunctionComponent = () => {
     );
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -99,6 +109,7 @@ export const CreateTrain: FunctionComponent = () => {
       </select>
       <br />
       <br />
+
       {localization.route[user.language]}
       <select
         style={{ color: 'black' }}
@@ -113,6 +124,7 @@ export const CreateTrain: FunctionComponent = () => {
       </select>
       <br />
       <br />
+
       <input
         type="text"
         placeholder={localization.naming[user.language]}
@@ -120,7 +132,9 @@ export const CreateTrain: FunctionComponent = () => {
         onChange={(e) => setName(e.target.value)}
         required
       />
+
       <button type="submit">{localization.createTrain[user.language]}</button>
+
       {errorAlert}
     </form>
   );

@@ -7,17 +7,17 @@ import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
 import { localization } from '../../localization';
 
-export const DeleteStation: FunctionComponent = () => {
+export const DeleteTrainType: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
 
-  const [stationId, setStationId] = useState('');
+  const [typeName, setTypeName] = useState('');
   const [error, setError] = useState('');
 
-  const deleteStationFunction = async (e: any) => {
+  const deleteTrainFunction = async (e: any) => {
     e.preventDefault();
 
     const url = new URL(
-      `/stations/delete/${stationId}`,
+      `/trains/types/delete/${typeName}`,
       config.trainsUrl,
     ).toString();
     const res = await axios.delete(url, {
@@ -44,21 +44,21 @@ export const DeleteStation: FunctionComponent = () => {
     setError('');
   };
 
-  const [stations, setStations] = useState([] as any[]);
+  const [types, setTypes] = useState([] as any[]);
 
   const loadData = async () => {
-    const { data: stations } = await axios.get(
-      new URL('/stations/get/list', config.trainsUrl).toString(),
+    const { data: trains } = await axios.get(
+      new URL('/trains/types/get/list', config.trainsUrl).toString(),
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
       },
     );
-    setStations(stations);
+    setTypes(trains);
 
-    if (stations.length) {
-      setStationId(stations[0].id);
+    if (trains.length) {
+      setTypeName(trains[0].id);
     }
   };
 
@@ -70,23 +70,25 @@ export const DeleteStation: FunctionComponent = () => {
   return (
     <form
       className="form"
-      onSubmit={deleteStationFunction}
+      onSubmit={deleteTrainFunction}
       style={{ fontSize: 15 }}
     >
-      {localization.station[user.language]}
+      {localization.trainType[user.language]}
       <select
         style={{ color: 'black' }}
-        onChange={(e) => setStationId(e.target.value)}
-        value={stationId}
+        onChange={(e) => setTypeName(e.target.value)}
+        value={typeName}
       >
-        {stations.map((station) => (
-          <option key={station.id} value={station.id}>
-            {station.name}
+        {types.map((train) => (
+          <option key={train.id} value={train.id}>
+            {train.name}
           </option>
         ))}
       </select>
+      <br />
+      <br />
 
-      <button type="submit">{localization.deleteStation[user.language]}</button>
+      <button type="submit">Delete train type</button>
 
       {errorAlert}
     </form>

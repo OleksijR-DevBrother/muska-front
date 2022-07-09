@@ -15,13 +15,14 @@ export const AddStationToRoute: FunctionComponent = () => {
   const [stationIndex, setStationIndex] = useState(1);
   const [error, setError] = useState('');
 
+  const changeStationindex = (index: string) => {
+    setStationIndex(parseInt(index));
+  };
+
   const createRouteStationFunction = async (e: any) => {
     e.preventDefault();
 
-    const url = new URL(
-      '/routes/stations-on-route/create',
-      config.trainsUrl,
-    ).toString();
+    const url = new URL('/routes/stations/create', config.trainsUrl).toString();
     const res = await axios.post(
       url,
       {
@@ -37,7 +38,17 @@ export const AddStationToRoute: FunctionComponent = () => {
     );
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -124,8 +135,9 @@ export const AddStationToRoute: FunctionComponent = () => {
       <input
         type="number"
         placeholder="Index on the route"
+        min={1}
         value={stationIndex}
-        onChange={(e) => setStationIndex(Number(e.target.value))}
+        onChange={(e) => changeStationindex(e.target.value)}
         required
       />
       <button type="submit">

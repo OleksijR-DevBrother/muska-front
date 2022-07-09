@@ -1,25 +1,27 @@
 import styles from './css/styles.module.scss';
 
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
 import { localization } from '../../localization';
 
-export const CreateRoute: FunctionComponent = () => {
+export const CreateTrainType: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
 
   const [name, setName] = useState('');
   const [error, setError] = useState('');
 
-  const createRouteFunction = async (e: any) => {
+  const createTrainFunction = async (e: any) => {
     e.preventDefault();
 
-    const url = new URL('/routes/create', config.trainsUrl).toString();
+    const url = new URL('/trains/types/create', config.trainsUrl).toString();
     const res = await axios.post(
       url,
-      { name },
+      {
+        name,
+      },
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
@@ -42,13 +44,16 @@ export const CreateRoute: FunctionComponent = () => {
       return;
     }
 
-    setName('');
     setError('');
   };
 
   const errorAlert = error ? <h2 className={styles.error}>{error}</h2> : null;
   return (
-    <form className="form" onSubmit={createRouteFunction}>
+    <form
+      className="form"
+      onSubmit={createTrainFunction}
+      style={{ fontSize: 15 }}
+    >
       <input
         type="text"
         placeholder={localization.naming[user.language]}
@@ -57,7 +62,9 @@ export const CreateRoute: FunctionComponent = () => {
         required
       />
 
-      <button type="submit">{localization.createRoute[user.language]}</button>
+      <button type="submit">
+        {localization.createTrainType[user.language]}
+      </button>
 
       {errorAlert}
     </form>

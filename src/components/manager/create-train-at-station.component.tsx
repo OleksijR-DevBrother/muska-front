@@ -1,6 +1,6 @@
 import styles from './css/styles.module.scss';
 
-import { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { config } from '../../config';
@@ -12,12 +12,21 @@ export const CreateTrainAtStation: FunctionComponent = () => {
 
   const [trainId, setTrainId] = useState('');
   const [stationId, setStationId] = useState('');
-  const [wayFromFirstStation, setWayFromFirstStation] = useState(0);
-  const [wayFromLastStation, setWayFromLastStation] = useState(0);
+  const [wayFromFirstStation, setWayFromFirstStation] = useState(1);
+  const [wayFromLastStation, setWayFromLastStation] = useState(1);
   const [trainStandFromFirstStation, setTrainStandFromFirstStation] =
-    useState(0);
-  const [trainStandFromLastStation, setTrainStandFromLastStation] = useState(0);
+    useState(1);
+  const [trainStandFromLastStation, setTrainStandFromLastStation] = useState(1);
   const [error, setError] = useState('');
+
+  const changeToPositiveInt = (
+    value: string,
+    setFunction: React.Dispatch<React.SetStateAction<number>>,
+  ) => {
+    let num = parseInt(value);
+    if (num < 1) num = 1;
+    setFunction(num);
+  };
 
   const createTrainFunction = async (e: any) => {
     e.preventDefault();
@@ -44,7 +53,17 @@ export const CreateTrainAtStation: FunctionComponent = () => {
     );
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -130,7 +149,9 @@ export const CreateTrainAtStation: FunctionComponent = () => {
         type="number"
         placeholder="From first station"
         value={wayFromFirstStation}
-        onChange={(e) => setWayFromFirstStation(Number(e.target.value))}
+        onChange={(e) =>
+          changeToPositiveInt(e.target.value, setWayFromFirstStation)
+        }
         required
       />
       <br />
@@ -139,7 +160,9 @@ export const CreateTrainAtStation: FunctionComponent = () => {
         type="number"
         placeholder="From last station"
         value={wayFromLastStation}
-        onChange={(e) => setWayFromLastStation(Number(e.target.value))}
+        onChange={(e) =>
+          changeToPositiveInt(e.target.value, setWayFromLastStation)
+        }
         required
       />
       <br />
@@ -150,7 +173,9 @@ export const CreateTrainAtStation: FunctionComponent = () => {
         type="number"
         placeholder="To"
         value={trainStandFromFirstStation}
-        onChange={(e) => setTrainStandFromFirstStation(Number(e.target.value))}
+        onChange={(e) =>
+          changeToPositiveInt(e.target.value, setTrainStandFromFirstStation)
+        }
         required
       />
       <br />
@@ -159,7 +184,9 @@ export const CreateTrainAtStation: FunctionComponent = () => {
         type="number"
         placeholder="input"
         value={trainStandFromLastStation}
-        onChange={(e) => setTrainStandFromLastStation(Number(e.target.value))}
+        onChange={(e) =>
+          changeToPositiveInt(e.target.value, setTrainStandFromLastStation)
+        }
         required
       />
       <button type="submit">

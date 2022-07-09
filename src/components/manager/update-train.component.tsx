@@ -11,8 +11,21 @@ export const UpdateTrain: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
 
   const [trainId, setTrainId] = useState('');
+  const [routeId, setRouteId] = useState('');
   const [trainName, setTrainName] = useState('');
+  const [trainType, setTrainType] = useState('');
   const [error, setError] = useState('');
+
+  const changeTrain = (e: any) => {
+    e.preventDefault();
+
+    const train = trains.find((train) => train.id === e.target.value);
+
+    setTrainName(train.name);
+    setTrainType(train.typeName);
+    setRouteId(train.routeId);
+    setTrainId(e.target.value);
+  };
 
   const updateTrainFunction = async (e: any) => {
     e.preventDefault();
@@ -23,7 +36,11 @@ export const UpdateTrain: FunctionComponent = () => {
     ).toString();
     const res = await axios.patch(
       url,
-      { name: trainName },
+      {
+        name: trainName,
+        typeName: trainType,
+        routeId,
+      },
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
@@ -32,7 +49,17 @@ export const UpdateTrain: FunctionComponent = () => {
     );
 
     if (res.status > 300) {
-      setError(res.data.message);
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
 
@@ -42,6 +69,8 @@ export const UpdateTrain: FunctionComponent = () => {
   };
 
   const [trains, setTrains] = useState([] as any[]);
+  const [trainTypes, setTrainTypes] = useState([] as any[]);
+  const [routes, setRoutes] = useState([] as any[]);
 
   if (trainId && trains.length && !trainName) {
     setTrainName(trains.find((train) => train.id === trainId).name);
@@ -61,6 +90,34 @@ export const UpdateTrain: FunctionComponent = () => {
     if (trains.length) {
       setTrainId(trains[0].id);
     }
+
+    const { data: routes } = await axios.get(
+      new URL('/routes/get/list', config.trainsUrl).toString(),
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      },
+    );
+    setRoutes(routes);
+
+    if (routes.length) {
+      setRouteId(routes[0].id);
+    }
+
+    const { data: trainTypes } = await axios.get(
+      new URL('/trains/types/get/list', config.trainsUrl).toString(),
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      },
+    );
+    setTrainTypes(trainTypes);
+
+    if (trainTypes.length) {
+      setTrainType(trainTypes[0].id);
+    }
   };
 
   useEffect(() => {
@@ -75,23 +132,16 @@ export const UpdateTrain: FunctionComponent = () => {
       style={{ fontSize: 15 }}
     >
       {localization.train[user.language]}
-      <select
-        style={{ color: 'black' }}
-        onChange={(e) => {
-          setTrainName('');
-          setTrainId(e.target.value);
-        }}
-        value={trainId}
-      >
+      <select style={{ color: 'black' }} onChange={changeTrain} value={trainId}>
         {trains.map((train) => (
           <option key={train.id} value={train.id}>
             {train.name}
           </option>
         ))}
       </select>
+      <br />
+      <br />
 
-      <br />
-      <br />
       <input
         type="text"
         placeholder={localization.naming[user.language]}
@@ -99,6 +149,36 @@ export const UpdateTrain: FunctionComponent = () => {
         onChange={(e) => setTrainName(e.target.value)}
         required
       />
+
+      {localization.type[user.language]}
+      <select
+        style={{ color: 'black' }}
+        onChange={(e) => setTrainType(e.target.value)}
+        value={trainType}
+      >
+        {trainTypes.map((trainType) => (
+          <option key={trainType.name} value={trainType.name}>
+            {trainType.name}
+          </option>
+        ))}
+      </select>
+      <br />
+      <br />
+
+      {localization.route[user.language]}
+      <select
+        style={{ color: 'black' }}
+        onChange={(e) => setRouteId(e.target.value)}
+        value={routeId}
+      >
+        {routes.map((route) => (
+          <option key={route.id} value={route.id}>
+            {route.name}
+          </option>
+        ))}
+      </select>
+      <br />
+      <br />
 
       <button type="submit">{localization.updateTrain[user.language]}</button>
 
