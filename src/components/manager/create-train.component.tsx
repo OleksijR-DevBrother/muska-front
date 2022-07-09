@@ -99,6 +99,7 @@ export const CreateTrain: FunctionComponent = () => {
       </select>
       <br />
       <br />
+
       {localization.route[user.language]}
       <select
         style={{ color: 'black' }}
@@ -113,6 +114,7 @@ export const CreateTrain: FunctionComponent = () => {
       </select>
       <br />
       <br />
+
       <input
         type="text"
         placeholder={localization.naming[user.language]}
@@ -120,7 +122,9 @@ export const CreateTrain: FunctionComponent = () => {
         onChange={(e) => setName(e.target.value)}
         required
       />
+
       <button type="submit">{localization.createTrain[user.language]}</button>
+
       {errorAlert}
     </form>
   );

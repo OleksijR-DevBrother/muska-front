@@ -40,9 +40,6 @@ const slice = createSlice({
       if (action.payload.DOB !== undefined) {
         state.DOB = action.payload.DOB;
       }
-      if (action.payload.address !== undefined) {
-        state.address = action.payload.address;
-      }
       if (action.payload.phoneNumber !== undefined) {
         state.phoneNumber = action.payload.phoneNumber;
       }

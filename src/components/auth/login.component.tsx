@@ -54,7 +54,6 @@ export const Login: FunctionComponent = () => {
       surname: res.data.surname,
       patronymic: res.data.patronymic,
       DOB: res.data.DOB,
-      address: res.data.address,
       phoneNumber: res.data.phoneNumber,
     });
 

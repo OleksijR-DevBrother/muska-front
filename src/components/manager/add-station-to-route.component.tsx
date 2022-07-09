@@ -18,10 +18,7 @@ export const AddStationToRoute: FunctionComponent = () => {
   const createRouteStationFunction = async (e: any) => {
     e.preventDefault();
 
-    const url = new URL(
-      '/routes/stations-on-route/create',
-      config.trainsUrl,
-    ).toString();
+    const url = new URL('/routes/stations/create', config.trainsUrl).toString();
     const res = await axios.post(
       url,
       {

@@ -14,7 +14,6 @@ export const UpdateProfile: FunctionComponent = () => {
   const [surname, setSurname] = useState(user.surname);
   const [patronymic, setPatronymic] = useState(user.patronymic);
   const [DOB, setDOB] = useState(user.DOB);
-  const [address, setAddress] = useState(user.address);
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
   const [error, setError] = useState('');
 
@@ -31,7 +30,6 @@ export const UpdateProfile: FunctionComponent = () => {
         surname,
         patronymic,
         DOB,
-        address,
         phoneNumber,
       },
       {
@@ -63,7 +61,6 @@ export const UpdateProfile: FunctionComponent = () => {
         surname: res.data.surname,
         patronymic: res.data.patronymic,
         DOB: res.data.DOB,
-        address: res.data.address,
         phoneNumber: res.data.phoneNumber,
       }),
     );
@@ -96,12 +93,6 @@ export const UpdateProfile: FunctionComponent = () => {
         placeholder="Date of Birth"
         value={DOB}
         onChange={(e) => setDOB(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Address"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
       />
       <input
         type="text"

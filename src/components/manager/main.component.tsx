@@ -11,6 +11,8 @@ import { DeleteRoute } from './delete-route.component';
 import { CreateStation } from './create-station.component';
 import { UpdateStation } from './update-station.component';
 import { DeleteStation } from './delete-station.component';
+import { CreateTrainType } from './create-train-type.component';
+import { DeleteTrainType } from './delete-train-type.component';
 import { CreateTrain } from './create-train.component';
 import { DeleteTrain } from './delete-train.component';
 import { UpdateTrain } from './update-train.component';
@@ -20,6 +22,8 @@ import { DeleteStationFromRoute } from './delete-station-on-route.component';
 import { CreateTrainDeparture } from './create-train-departure.component';
 import { DeleteTrainDeparture } from './delete-train-departure.component';
 import { CreateTrainAtStation } from './create-train-at-station.component';
+import { CreateCarriageType } from './create-carriage-type.component';
+import { DeleteCarriageType } from './delete-carriage-type.component';
 import { CreateCarriage } from './create-carriage.component';
 import { DeleteCarriage } from './delete-carriage.component';
 
@@ -120,6 +124,14 @@ export const ManagerMain: FunctionComponent = () => {
       component: DeleteStationFromRoute,
     },
     {
+      title: 'Create new train type',
+      component: CreateTrainType,
+    },
+    {
+      title: 'Delete train type',
+      component: DeleteTrainType,
+    },
+    {
       title: 'Create new train',
       component: CreateTrain,
     },
@@ -142,6 +154,14 @@ export const ManagerMain: FunctionComponent = () => {
     {
       title: 'Create train at station',
       component: CreateTrainAtStation,
+    },
+    {
+      title: 'Create new carriage type',
+      component: CreateCarriageType,
+    },
+    {
+      title: 'Delete carriage type',
+      component: DeleteCarriageType,
     },
     {
       title: 'Create new carriage',

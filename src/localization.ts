@@ -79,9 +79,25 @@ export const localization: Localization = {
     english: 'Create train',
     ukrainian: 'Створити потяг',
   },
+  createTrainType: {
+    english: 'Create train type',
+    ukrainian: 'Створити тип потягу',
+  },
+  createCarriageType: {
+    english: 'Create carriage type',
+    ukrainian: 'Створити тип вагону',
+  },
   route: {
-    english: 'Ruote',
+    english: 'Route',
     ukrainian: 'Маршрут',
+  },
+  trainType: {
+    english: 'Train type',
+    ukrainian: 'Тип потягу',
+  },
+  carriageType: {
+    english: 'Carriage type',
+    ukrainian: 'Тип вагону',
   },
   trainNumber: {
     english: 'Train number',
@@ -130,10 +146,6 @@ export const localization: Localization = {
   DOB: {
     english: 'Date of birth',
     ukrainian: 'Дата нарождення',
-  },
-  address: {
-    english: 'Address',
-    ukrainian: 'Адреса',
   },
   phone: {
     english: 'Phone',

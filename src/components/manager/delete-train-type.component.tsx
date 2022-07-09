@@ -7,17 +7,17 @@ import { config } from '../../config';
 import { useStoreSelector } from '../../redux/store';
 import { localization } from '../../localization';
 
-export const DeleteTrain: FunctionComponent = () => {
+export const DeleteTrainType: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
 
-  const [trainId, setTrainId] = useState('');
+  const [typeName, setTypeName] = useState('');
   const [error, setError] = useState('');
 
   const deleteTrainFunction = async (e: any) => {
     e.preventDefault();
 
     const url = new URL(
-      `/trains/delete/${trainId}`,
+      `/trains/types/delete/${typeName}`,
       config.trainsUrl,
     ).toString();
     const res = await axios.delete(url, {
@@ -34,21 +34,21 @@ export const DeleteTrain: FunctionComponent = () => {
     setError('');
   };
 
-  const [trains, setTrains] = useState([] as any[]);
+  const [types, setTypes] = useState([] as any[]);
 
   const loadData = async () => {
     const { data: trains } = await axios.get(
-      new URL('/trains/get/list', config.trainsUrl).toString(),
+      new URL('/trains/types/get/list', config.trainsUrl).toString(),
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
       },
     );
-    setTrains(trains);
+    setTypes(trains);
 
     if (trains.length) {
-      setTrainId(trains[0].id);
+      setTypeName(trains[0].id);
     }
   };
 
@@ -63,13 +63,13 @@ export const DeleteTrain: FunctionComponent = () => {
       onSubmit={deleteTrainFunction}
       style={{ fontSize: 15 }}
     >
-      {localization.train[user.language]}
+      {localization.trainType[user.language]}
       <select
         style={{ color: 'black' }}
-        onChange={(e) => setTrainId(e.target.value)}
-        value={trainId}
+        onChange={(e) => setTypeName(e.target.value)}
+        value={typeName}
       >
-        {trains.map((train) => (
+        {types.map((train) => (
           <option key={train.id} value={train.id}>
             {train.name}
           </option>
@@ -78,7 +78,7 @@ export const DeleteTrain: FunctionComponent = () => {
       <br />
       <br />
 
-      <button type="submit">Delete train</button>
+      <button type="submit">Delete train type</button>
 
       {errorAlert}
     </form>

@@ -15,7 +15,6 @@ export const SignUp: FunctionComponent = () => {
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
   const [DOB, setDOB] = useState('');
-  const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -29,7 +28,6 @@ export const SignUp: FunctionComponent = () => {
       surname,
       patronymic,
       DOB,
-      address,
       phoneNumber,
       password,
       isBlocked: false,
@@ -65,11 +63,6 @@ export const SignUp: FunctionComponent = () => {
         type="text"
         placeholder="Date of Birth"
         onChange={(e) => setDOB(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Address"
-        onChange={(e) => setAddress(e.target.value)}
       />
       <input
         type="text"

@@ -14,7 +14,6 @@ export const AddUser: FunctionComponent = () => {
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
   const [DOB, setDOB] = useState('');
-  const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [role, setRole] = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +30,6 @@ export const AddUser: FunctionComponent = () => {
         surname,
         patronymic,
         DOB,
-        address,
         phoneNumber,
         role,
         isBlocked: false,
@@ -44,8 +42,18 @@ export const AddUser: FunctionComponent = () => {
       },
     );
 
-    if (res.data.error) {
-      setError(res.data.error);
+    if (res.status > 300) {
+      let error = res.data.error;
+      if (res.data.message) {
+        if (Array.isArray(res.data.message)) {
+          if (res.data.message.length) {
+            error = res.data.message[0];
+          }
+        } else {
+          error = res.data.message;
+        }
+      }
+      setError(error);
       return;
     }
   };
@@ -70,14 +78,9 @@ export const AddUser: FunctionComponent = () => {
         onChange={(e) => setPatronymic(e.target.value)}
       />
       <input
-        type="text"
+        type="date"
         placeholder={localization.DOB[user.language]}
         onChange={(e) => setDOB(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder={localization.address[user.language]}
-        onChange={(e) => setAddress(e.target.value)}
       />
       <input
         type="text"
@@ -91,12 +94,24 @@ export const AddUser: FunctionComponent = () => {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <input
-        type="text"
-        placeholder={localization.role[user.language]}
+      <a style={{ fontSize: 15 }}>Role:</a>
+      <select
+        style={{ color: 'black', fontSize: 15 }}
         onChange={(e) => setRole(e.target.value)}
-        required
-      />
+        value={role}
+      >
+        <option value="passenger" style={{ color: 'black' }}>
+          Passenger
+        </option>
+        <option value="manager" style={{ color: 'black' }}>
+          Manager
+        </option>
+        <option value="Admin" style={{ color: 'black' }}>
+          Admin
+        </option>
+      </select>
+      <br />
+      <br />
 
       <button type="submit">{localization.addUser[user.language]}</button>
 
