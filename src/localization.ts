@@ -299,4 +299,13 @@ export const localization: Localization = {
     english: 'Ticket price',
     ukrainian: 'Вартість квитка',
   },
+  searchButton: {
+    english: 'Search',
+    ukrainian: 'Пошук',
+  },
+  labelPlease: {
+    english: 'Please, enter the username of user you want to delete or block',
+    ukrainian: `Будь ласка, введіть username 
+    користувача, якого хочете видалити або заблокувати`,
+  },
 };

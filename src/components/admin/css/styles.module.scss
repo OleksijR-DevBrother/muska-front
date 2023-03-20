@@ -14,6 +14,98 @@
     format('truetype');
 }
 
+.inputUser {
+  -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 250px;
+    border-radius: 3px;
+    padding: 10px 15px; 
+    margin: 10px 5px 10px;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    transition-duration: 0.25s;
+    font-weight: 300;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: white;
+    margin-left: 37px;
+}
+
+.inputUser:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.labelSearch {
+  position: inherit;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.searchButton {
+  -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    background-color: white;
+    border: 0;
+    padding: 10px 15px;
+    color: #050836;
+    border-radius: 3px;
+    width: 250px;
+    cursor: pointer;
+    font-size: 18px;
+    transition-duration: 0.25s;
+}
+
+.searchButton:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.deleteButton {
+  background-color: #32a1ce;
+  font-size: 15px;
+  border-radius: 5px;
+  border: thick double red;
+  padding: 5px 10px;
+  margin: 10px;
+}
+
+.deleteButton:hover {
+  background-color: rgba(255, 255, 255, 0.2)
+}
+
+.unblockButton {
+  background-color: #32a1ce;
+  font-size: 15px;
+  border: thick double purple;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px 10px;
+}
+
+.unblockButton:hover {
+  background-color: rgba(255, 255, 255, 0.2)
+}
+
+.blockButton {
+  background-color: #32a1ce;
+  font-size: 15px;
+  border: thick double purple;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px 10px;
+}
+
+.blockButton:hover {
+  background-color: rgba(255, 255, 255, 0.2)
+}
+
 .auth-block {
   a {
     text-decoration: none;
@@ -28,9 +120,9 @@
 
   * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-weight: 300;
+    // margin: 0;
+    // padding: 0;
+    font-weight: 200;
   }
 
   & {
@@ -168,7 +260,7 @@
   }
 
   form button:hover {
-    background-color: #f5f7f9;
+    background-color: rgba(255, 255, 255, 0.4);
   }
 
   .bg-bubbles {
@@ -292,3 +384,5 @@
     }
   }
 }
+
+

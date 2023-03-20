@@ -4,8 +4,9 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { config } from '../../config';
-import { useStoreSelector } from '../../redux/store';
+// import { useStoreSelector } from '../../redux/store';
 import { localization } from '../../localization';
+import { useStoreSelector } from '../../redux/store';
 
 export const DeleteRoute: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);

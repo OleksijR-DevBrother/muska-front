@@ -94,9 +94,16 @@ export const AddUser: FunctionComponent = () => {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <a style={{ fontSize: 15 }}>Role:</a>
+      {/* <div className="dropdown"> */}
+      <a style={{ fontSize: 20, margin: 15 }}>Role:</a>
       <select
-        style={{ color: 'black', fontSize: 15 }}
+        style={{
+          color: 'black',
+          fontSize: 17,
+          margin: 10,
+          padding: 5,
+          borderRadius: 5,
+        }}
         onChange={(e) => setRole(e.target.value)}
         value={role}
       >
@@ -106,10 +113,11 @@ export const AddUser: FunctionComponent = () => {
         <option value="manager" style={{ color: 'black' }}>
           Manager
         </option>
-        <option value="Admin" style={{ color: 'black' }}>
+        <option value="admin" style={{ color: 'black' }}>
           Admin
         </option>
       </select>
+      {/* </div> */}
       <br />
       <br />
 
