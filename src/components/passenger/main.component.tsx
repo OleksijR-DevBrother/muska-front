@@ -1,6 +1,11 @@
 import styles from './css/styles.module.scss';
 
-import { FunctionComponent, useState } from 'react';
+import {
+  FunctionComponent,
+  ReactEventHandler,
+  SyntheticEvent,
+  useState,
+} from 'react';
 
 import { localization } from '../../localization';
 import { useStoreDispatch, useStoreSelector } from '../../redux/store';
@@ -51,7 +56,7 @@ function a11yProps(index: number) {
 export const PassengerMain: FunctionComponent = () => {
   const user = useStoreSelector((store) => store.user);
   const dispatch = useStoreDispatch();
-  const logout = (e: any) => {
+  const logout: ReactEventHandler = (e: SyntheticEvent) => {
     e.preventDefault();
 
     dispatch(
